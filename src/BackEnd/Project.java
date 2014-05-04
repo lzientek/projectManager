@@ -10,10 +10,12 @@ public class Project {
     private int id;
     private double projectAdvancement;
     private List<User> employeesWorkingOnIt;
+    private List<ProjectTask> projectTasks;
 
     private User author;
     private Date beginDate;
     private Date endDate;
+
 
     private String description;
 
