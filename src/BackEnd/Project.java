@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Project {
     private int id;
+    private String name;
     private double projectAdvancement;
     private List<User> employeesWorkingOnIt;
     private List<ProjectTask> projectTasks;
@@ -19,7 +20,7 @@ public class Project {
 
     private String description;
 
-    public Project(List<User> employeesWorkingOnIt, double projectAdvancement,
+    public Project(String name, List<User> employeesWorkingOnIt, double projectAdvancement,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
         this.employeesWorkingOnIt = employeesWorkingOnIt;
@@ -29,6 +30,31 @@ public class Project {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.description = description;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<ProjectTask> getProjectTasks() {
+        return projectTasks;
+    }
+
+    public void setProjectTasks(List<ProjectTask> projectTasks) {
+        this.projectTasks = projectTasks;
+    }
+
+    public List<User> getEmployeesWorkingOnIt() {
+        return employeesWorkingOnIt;
+    }
+
+    public void setEmployeesWorkingOnIt(List<User> employeesWorkingOnIt) {
+        this.employeesWorkingOnIt = employeesWorkingOnIt;
     }
 
     public int getId() {

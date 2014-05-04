@@ -10,13 +10,13 @@ import java.sql.SQLException;
  */
 public abstract class JdbcDao {
 
-    private java.sql.Connection connection;
+    protected java.sql.Connection connection;
     public void connect() throws Exception {
         try {
             //TODO:changer les parametres!!!
             connection = DriverManager.getConnection("jdbc:mysql://10.11.19.16:3306/javaparadise", "lucas", "supinfo");
         } catch (SQLException e) {
-           throw new Exception("Erreur de connection a la base de données!");
+            throw new Exception("Erreur de connection a la base de données!" + e.getMessage());
         }
     }
 }
