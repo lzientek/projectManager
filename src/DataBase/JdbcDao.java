@@ -1,7 +1,5 @@
 package DataBase;
 
-import sun.rmi.transport.Connection;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -11,6 +9,7 @@ import java.sql.SQLException;
 public abstract class JdbcDao {
 
     protected java.sql.Connection connection;
+
     public void connect() throws Exception {
         try {
             //TODO:changer les parametres!!!

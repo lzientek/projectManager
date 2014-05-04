@@ -5,7 +5,6 @@ import BackEnd.Project;
 import BackEnd.ProjectTask;
 import DataBase.Interface.ProjectDao;
 
-import java.lang.reflect.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
                     "INSERT INTO project (Name)"      //TODO: ajouter les parametres
                             + " VALUES (?)";
 
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
             pstmt.executeUpdate();
             return true;
@@ -43,7 +42,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             //TODO: plein d'autre parametre a remplir
             String sql1 =
                     "UPDATE project SET name =? WHERE id=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
             pstmt.setInt(2, project.getId());
 
@@ -59,14 +58,14 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
         try {
             String sql1 =
                     "SELECT * FROM  project WHERE UserId=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, user.getId());
 
             ResultSet result = pstmt.executeQuery();
 
             ArrayList<Project> projectArrayList = new ArrayList<Project>();
 
-            while (result.next()){
+            while (result.next()) {
                 //TODO: remplir
             }
 
@@ -82,15 +81,15 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
         try {
             String sql1 =
                     "SELECT * FROM  project WHERE Id=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
 
-           Project projectToReturn;
+            Project projectToReturn;
 
             result.next();
-                //TODO: remplir projectToReturn
+            //TODO: remplir projectToReturn
 
 
             return null;//projectToReturn;
@@ -105,14 +104,14 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
         try {
             String sql1 =
                     "SELECT * FROM  tasks WHERE projectId=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, project.getId());
 
             ResultSet result = pstmt.executeQuery();
 
             ArrayList<ProjectTask> tasksArrayList = new ArrayList<ProjectTask>();
 
-            while (result.next()){
+            while (result.next()) {
                 //TODO: remplir
             }
             return tasksArrayList;
@@ -127,7 +126,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
         try {
             String sql1 =
                     "SELECT * FROM  tasks WHERE Id=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
@@ -152,7 +151,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
                     "INSERT INTO tasks (Name)"      //TODO: ajouter les parametres
                             + " VALUES (?)";
 
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
             pstmt.executeUpdate();
             return true;
@@ -168,7 +167,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
         try {
             String sql1 =
                     "UPDATE tasks SET name =? WHERE id=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
             pstmt.setInt(2, task.getId());
 
