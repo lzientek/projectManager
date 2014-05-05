@@ -4,6 +4,7 @@ import BackEnd.LocalUser;
 import BackEnd.Project;
 import BackEnd.ProjectTask;
 import DataBase.Interface.ProjectDao;
+import com.sun.deploy.util.StringUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +23,18 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     public Boolean createAProject(Project project) {
         try {
             String sql1 =
-                    "INSERT INTO project (Name)"      //TODO: ajouter les parametres
-                            + " VALUES (?)";
+                    "INSERT INTO projects (name,projectadvencement,employeesOnIt," +
+                            "author,beginDate,endDate,description)"
+                            + " VALUES (?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
+            pstmt.setInt(2, project.getProjectAdvancement());
+            pstmt.setString(3, project.getName());
+            pstmt.setString(4, project.getName());
+            pstmt.setString(5, project.getName());
+            pstmt.setString(6, project.getName());
+            pstmt.setString(7, project.getName());
             pstmt.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -122,22 +130,28 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     }
 
     @Override
-    public ProjectTask loadTaskById(int id) {
+    public ProjectTask loadTaskById(int id, Project project) {
         try {
             String sql1 =
-                    "SELECT * FROM  tasks WHERE Id=?";
+                    "SELECT * FROM tasks WHERE idtasks=?";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
 
-            ProjectTask taskToReturn;
-
             result.next();
-            //TODO: remplir taskToReturn
+            ProjectTask taskToReturn = new ProjectTask(result.getString("name"),
+                    result.getString("description"),
+                    result.getInt("idtasks"),
+                    project,
+                    result.getDate("beginDate"),
+                    result.getDate("endDate"),
+                    result.getString("employeeOnIt").split("-"),
+                    new JdbcUserDao().loadUserById(result.getInt("idauthor"))
 
+            );
 
-            return null;//taskToReturn;
+            return taskToReturn;
 
         } catch (Exception e) {
             return null;
@@ -148,11 +162,18 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     public Boolean createProjectTask(ProjectTask task) {
         try {
             String sql1 =
-                    "INSERT INTO tasks (Name)"      //TODO: ajouter les parametres
-                            + " VALUES (?)";
+                    "INSERT INTO tasks (name,description,beginDate,endDate" +
+                            ",employeeOnIt,idauthor,idprojects)"
+                            + " VALUES (?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
+            pstmt.setString(2, task.getDescription());
+            pstmt.setDate(3, (java.sql.Date) task.getBeginDate());
+            pstmt.setDate(4, (java.sql.Date) task.getEndDate());
+            pstmt.setString(5, StringUtils.join(task.getEmployeesWorkingOnIt(), "-"));
+            pstmt.setInt(6, task.getTaskAuthor().getId());
+            pstmt.setInt(7, task.getProject().getId());
             pstmt.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -166,10 +187,16 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     public Boolean updateProjectTask(ProjectTask task) {
         try {
             String sql1 =
-                    "UPDATE tasks SET name =? WHERE id=?";
+                    "UPDATE tasks SET name =? , description=?,beginDate=?,endDate=?" +
+                            ",employeeOnIt=?,idauthor=?,idprojects=?";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
-            pstmt.setInt(2, task.getId());
+            pstmt.setString(2, task.getDescription());
+            pstmt.setDate(3, (java.sql.Date) task.getBeginDate());
+            pstmt.setDate(4, (java.sql.Date) task.getEndDate());
+            pstmt.setString(5, StringUtils.join(task.getEmployeesWorkingOnIt(), "-"));
+            pstmt.setInt(6, task.getTaskAuthor().getId());
+            pstmt.setInt(7, task.getProject().getId());
 
             pstmt.executeUpdate();
             return true;

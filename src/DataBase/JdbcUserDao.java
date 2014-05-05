@@ -44,12 +44,12 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
     }
 
     @Override
-    public List<User> loadUserFromProject(Project project) {
+    public User loadUserById(int id) {
         try {
             String sql1 =
-                    "SELECT COUNT (*) AS nbResult FROM  users WHERE id=? && pass=?";  //TODO: il va falloir un join!
+                    "SELECT COUNT (*) AS nbResult FROM  users WHERE id=?";  //TODO: il va falloir un join!
             PreparedStatement pstmt = connection.prepareStatement( sql1 );
-            pstmt.setInt(1, project.getId());
+            pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
 
@@ -57,6 +57,33 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
 
             while(result.next()){
                 //TODO:implémenter
+
+            }
+
+
+            return userList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<User> loadUserByFromProject(Project project) {
+        try {
+            String sql1 =
+                    "SELECT COUNT (*) AS nbResult FROM  users WHERE idusers=?";
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
+            pstmt.setInt(1, project.getId());
+
+            ResultSet result = pstmt.executeQuery();
+
+            List<User> userList = new ArrayList<User>();
+
+            while (result.next()) {
+                userList.add(new User(
+                        result.getInt("idusers"),
+                        result.getString("mail"),
+                        result.getInt("isManager") == 1));
 
             }
 

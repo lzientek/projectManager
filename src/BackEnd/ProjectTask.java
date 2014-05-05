@@ -19,17 +19,17 @@ public class ProjectTask {
 
     public ProjectTask(String name, String description, int id, Project project,
                        Date beginDate, Date endDate,
-                       List<User> employeesWorkingOnIt,
-                       User taskAuthor, Boolean isCompleted) {
+                       String[] employeesWorkingOnIt,
+                       User taskAuthor) {
         this.name = name;
         this.description = description;
         this.id = id;
         this.project = project;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        this.employeesWorkingOnIt = employeesWorkingOnIt;
+        //this.employeesWorkingOnIt = employeesWorkingOnIt;
         this.taskAuthor = taskAuthor;
-        this.isCompleted = isCompleted;
+        this.isCompleted = endDate.getTime() <= (new Date()).getTime();
     }
 
     public String getName() {

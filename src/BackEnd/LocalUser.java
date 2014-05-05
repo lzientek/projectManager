@@ -6,8 +6,8 @@ package BackEnd;
 public class LocalUser extends User {
     private String password = "";
 
-    public LocalUser(int id, String mail) {
-        super(id, mail);
+    public LocalUser(int id, String mail, Boolean isManager) {
+        super(id, mail, isManager);
     }
 
     public void setPassword(String password) {

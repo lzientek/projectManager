@@ -6,10 +6,20 @@ package BackEnd;
 public class User {
     private int id;
     private String mail;
+    private Boolean isManager;
 
-    public User(int id, String mail) {
+    public Boolean getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(Boolean isManager) {
+        this.isManager = isManager;
+    }
+
+    public User(int id, String mail, Boolean isManager) {
         this.id = id;
         this.mail = mail;
+        this.isManager = isManager;
     }
 
     public int getId() {

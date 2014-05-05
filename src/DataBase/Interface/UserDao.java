@@ -12,5 +12,8 @@ import java.util.List;
 public interface UserDao {
     public Boolean connectUser(LocalUser user);
     public Boolean registerUser(LocalUser user);
-    public List<User> loadUserFromProject(Project project);
+
+    public User loadUserById(int id);
+
+    public List<User> loadUserByFromProject(Project project);
 }

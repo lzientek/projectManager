@@ -9,7 +9,7 @@ import java.util.List;
 public class Project {
     private int id;
     private String name;
-    private double projectAdvancement;
+    private int projectAdvancement;
     private List<User> employeesWorkingOnIt;
     private List<ProjectTask> projectTasks;
 
@@ -20,7 +20,7 @@ public class Project {
 
     private String description;
 
-    public Project(String name, List<User> employeesWorkingOnIt, double projectAdvancement,
+    public Project(String name, List<User> employeesWorkingOnIt, int projectAdvancement,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
         this.employeesWorkingOnIt = employeesWorkingOnIt;
@@ -65,11 +65,11 @@ public class Project {
         this.id = id;
     }
 
-    public double getProjectAdvancement() {
+    public int getProjectAdvancement() {
         return projectAdvancement;
     }
 
-    public void setProjectAdvancement(double projectAdvancement) {
+    public void setProjectAdvancement(int projectAdvancement) {
         this.projectAdvancement = projectAdvancement;
     }
 

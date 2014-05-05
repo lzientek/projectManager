@@ -7,5 +7,6 @@ package CLI;
 public class CLILauncher {
     public static void main(String[] args) {
         System.out.println("Project Manager CLI");
+
     }
 }

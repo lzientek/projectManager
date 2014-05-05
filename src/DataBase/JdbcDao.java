@@ -13,7 +13,7 @@ public abstract class JdbcDao {
     public void connect() throws Exception {
         try {
             //TODO:changer les parametres!!!
-            connection = DriverManager.getConnection("jdbc:mysql://10.11.19.16:3306/javaparadise", "lucas", "supinfo");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/java2", "root", "root");
         } catch (SQLException e) {
             throw new Exception("Erreur de connection a la base de données!" + e.getMessage());
         }
