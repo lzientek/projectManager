@@ -1,5 +1,7 @@
 package BackEnd;
 
+import DataBase.JdbcUserDao;
+
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class ProjectTask {
         this.project = project;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        //this.employeesWorkingOnIt = employeesWorkingOnIt;
+        this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
         this.taskAuthor = taskAuthor;
         this.isCompleted = endDate.getTime() <= (new Date()).getTime();
     }

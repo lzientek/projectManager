@@ -11,9 +11,10 @@ import java.util.List;
  */
 public interface UserDao {
     public Boolean connectUser(LocalUser user);
+
     public Boolean registerUser(LocalUser user);
 
     public User loadUserById(int id);
 
-    public List<User> loadUserByFromProject(Project project);
+    public List<User> loadUserByFromProject(String[] strings);
 }

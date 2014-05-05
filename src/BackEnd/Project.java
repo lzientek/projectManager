@@ -1,5 +1,7 @@
 package BackEnd;
 
+import DataBase.JdbcUserDao;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +22,10 @@ public class Project {
 
     private String description;
 
-    public Project(String name, List<User> employeesWorkingOnIt, int projectAdvancement,
+    public Project(String name, String[] employeesWorkingOnIt, int projectAdvancement,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
-        this.employeesWorkingOnIt = employeesWorkingOnIt;
+        this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
         this.projectAdvancement = projectAdvancement;
         this.id = id;
         this.author = author;

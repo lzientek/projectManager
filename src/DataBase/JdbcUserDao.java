@@ -5,10 +5,12 @@ import BackEnd.Project;
 import BackEnd.ProjectTask;
 import BackEnd.User;
 import DataBase.Interface.UserDao;
+import com.sun.deploy.util.StringUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,17 +22,15 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
         try {
             String sql1 =
                     "SELECT COUNT (*) AS nbResult FROM  users WHERE mail=? && pass=?";
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, user.getMail());
             pstmt.setString(2, user.getPassword());
 
             ResultSet result = pstmt.executeQuery();
 
-            ProjectTask taskToReturn;
-
             result.next();
 
-            if(result.getInt(1) == 1)    //TODO: a tester
+            if (result.getInt(1) == 1)    //TODO: a tester
                 return true;
             return false;
         } catch (Exception e) {
@@ -47,33 +47,29 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
     public User loadUserById(int id) {
         try {
             String sql1 =
-                    "SELECT COUNT (*) AS nbResult FROM  users WHERE id=?";  //TODO: il va falloir un join!
-            PreparedStatement pstmt = connection.prepareStatement( sql1 );
+                    "SELECT * FROM  users WHERE id=?";
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
+            result.next();
+            User user = new User(result.getInt("idusers"),
+                    result.getString("mail"),
+                    result.getInt("isManager") == 1);
 
-            List<User> userList = new ArrayList<User>();
-
-            while(result.next()){
-                //TODO:implémenter
-
-            }
-
-
-            return userList;
+            return user;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<User> loadUserByFromProject(Project project) {
+    public List<User> loadUserByFromProject(String[] strings) {
         try {
+            String inString = StringUtils.join(Arrays.asList(strings), ", ");
             String sql1 =
-                    "SELECT COUNT (*) AS nbResult FROM  users WHERE idusers=?";
+                    "SELECT * FROM  users WHERE idusers IN (" + inString + ")";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
-            pstmt.setInt(1, project.getId());
 
             ResultSet result = pstmt.executeQuery();
 
