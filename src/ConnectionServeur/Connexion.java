@@ -5,6 +5,8 @@ package ConnectionServeur;
  */
 
 
+import BackEnd.StockageUser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,10 +18,9 @@ public class Connexion implements Runnable {
 
     private Socket socket = null;
     public static Thread t2;
-    public static String login = null, pass = null, message1 = null, message2 = null, message3 = null;
+    public static String login = null, pass = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private Scanner sc = null;
     private boolean connect = false;
 
     public Connexion(Socket s) {
@@ -33,33 +34,28 @@ public class Connexion implements Runnable {
 
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            sc = new Scanner(System.in);
 
 
             while (!connect) {
 
-                System.out.println(in.readLine());
-                login = sc.nextLine();
-                out.println(login);
-                out.flush();
-
-                System.out.println(in.readLine());
-                pass = sc.nextLine();
-                out.println(pass);
-                out.flush();
-
+                if (in.readLine() == "authId") {
+                    out.println(StockageUser.user.getId());
+                    out.flush();
+                }
+                if (in.readLine() == "authMail") {
+                    out.println(StockageUser.user.getMail());
+                    out.flush();
+                }
                 if (in.readLine().equals("connecte")) {
-
-                    System.out.println("Je suis connecté ");
                     connect = true;
                 } else {
-                    System.err.println("Vos informations sont incorrectes ");
+                    System.err.println("erreur de connexion");
                 }
 
             }
 
-            t2 = new Thread(new Chat_ClientServeur(socket));
-            t2.start();
+            new NotifServeur(socket);
+
 
         } catch (IOException e) {
 
