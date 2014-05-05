@@ -18,7 +18,7 @@ public class login extends JFrame {
 	private JTextField textField_1;
 
 	/**
-	 * Launch the application.
+	 * madee by gael
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
