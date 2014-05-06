@@ -10,7 +10,9 @@ import java.util.List;
  * Created by lucas on 04/05/2014.
  */
 public interface UserDao {
-    public Boolean connectUser(LocalUser user);
+    public Boolean createUser(String mail, String pass, Boolean isManager);
+
+    public LocalUser connectUser(String mail, String pass);
 
     public Boolean registerUser(LocalUser user);
 

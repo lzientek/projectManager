@@ -2,6 +2,7 @@ package BackEnd;
 
 import DataBase.JdbcUserDao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +23,19 @@ public class Project {
 
     private String description;
 
+    public Project() {
+        employeesWorkingOnIt = new ArrayList<User>();
+        projectTasks = new ArrayList<ProjectTask>();
+    }
+
     public Project(String name, String[] employeesWorkingOnIt, int projectAdvancement,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
-        this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
+        try {
+            this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.projectAdvancement = projectAdvancement;
         this.id = id;
         this.author = author;
@@ -54,6 +64,18 @@ public class Project {
     public List<User> getEmployeesWorkingOnIt() {
         return employeesWorkingOnIt;
     }
+
+    public String getEmployeesWorkingOnItJoin() {
+        String toReturn = "";
+        for (int i = 0; i < employeesWorkingOnIt.size(); i++) {
+            if (i == 0)
+                toReturn = String.valueOf(employeesWorkingOnIt.get(i).getId());
+            else
+                toReturn += "-" + employeesWorkingOnIt.get(i).getId();
+        }
+        return toReturn;
+    }
+
 
     public void setEmployeesWorkingOnIt(List<User> employeesWorkingOnIt) {
         this.employeesWorkingOnIt = employeesWorkingOnIt;
@@ -105,5 +127,22 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addEmployeebyid(int id) {
+        try {
+            employeesWorkingOnIt.add(new JdbcUserDao().loadUserById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteByEmployeeId(int id) {
+        for (int i = 0; i < employeesWorkingOnIt.size(); i++) {
+            if (employeesWorkingOnIt.get(i).getId() == id) {
+                employeesWorkingOnIt.remove(i);
+                break;
+            }
+        }
     }
 }

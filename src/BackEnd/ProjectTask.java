@@ -29,7 +29,11 @@ public class ProjectTask {
         this.project = project;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
+        try {
+            this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.taskAuthor = taskAuthor;
         this.isCompleted = endDate.getTime() <= (new Date()).getTime();
     }
