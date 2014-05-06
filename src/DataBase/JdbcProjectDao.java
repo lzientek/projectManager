@@ -73,16 +73,16 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             String regex = "^(" + user.getId() + ")-|-(" + user.getId() + ")-|-(" + user.getId() + ")$";
 
             String sql1 =
-                    "SELECT * FROM  projects WHERE employeesOnIt REGEXP '" + regex + "' ";
+                    "SELECT * FROM  projects WHERE employeesOnIt REGEXP '" + regex + "' OR employeesOnIt = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
+            pstmt.setString(1, String.valueOf(user.getId()));
 
             ResultSet result = pstmt.executeQuery();
-
             ArrayList<Project> projectArrayList = new ArrayList<Project>();
 
             while (result.next()) {
                 projectArrayList.add(new Project(
-                        result.getString("name"), result.getString("employeeOnIt").split("-"),
+                        result.getString("name"), result.getString("employeesOnIt").split("-"),
                         result.getInt("projectadvencement"), result.getInt("idprojects"),
                         new JdbcUserDao().loadUserById(result.getInt("author")),
                         result.getDate("beginDate"),
@@ -90,10 +90,10 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
                         result.getString("description")));
             }
 
-            return null;//projectArrayList;
+            return projectArrayList;
 
         } catch (Exception e) {
-            return null;
+            return new ArrayList<Project>();
         }
     }
 
@@ -106,7 +106,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
-
+            //todo : chaeck
 
             result.next();
             Project projectToReturn = new Project(result.getString("name"), result.getString("employeeOnIt").split("-"),
@@ -195,9 +195,9 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
             pstmt.setString(2, task.getDescription());
-            pstmt.setDate(3, (java.sql.Date) task.getBeginDate());
-            pstmt.setDate(4, (java.sql.Date) task.getEndDate());
-            pstmt.setString(5, StringUtils.join(task.getEmployeesWorkingOnIt(), "-"));
+            pstmt.setDate(3, new java.sql.Date(task.getBeginDate().getTime()));
+            pstmt.setDate(4, new java.sql.Date(task.getEndDate().getTime()));
+            pstmt.setString(5, task.getEmployeesWorkingOnItJoin());
             pstmt.setInt(6, task.getTaskAuthor().getId());
             pstmt.setInt(7, task.getProject().getId());
             pstmt.executeUpdate();

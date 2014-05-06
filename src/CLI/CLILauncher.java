@@ -12,7 +12,8 @@ import java.util.Scanner;
  */
 public class CLILauncher {
     public static void main(String[] args) {
-        System.out.println("Project Manager CLI");
+        System.out.println("Project Manager CLI\r\n" +
+                "connect pour se connecter et rien pour register");
         Scanner sc = new Scanner(System.in);
         LocalUser localUser = null;
         String s = sc.nextLine();
@@ -41,11 +42,18 @@ public class CLILauncher {
 
             System.out.println("1:add a project");
             System.out.println("2:modify a project");
+            System.out.println("3:show project");
+            System.out.println("4:add a task");
+            System.out.println("5:modify a task");
             String line = sc.nextLine();
             if (line.equals("1"))
                 Command.addProject();
             if (line.equals("2"))
                 Command.modifyProject();
+            if (line.equals("3"))
+                Command.showProjects();
+            if (line.equals("4"))
+                Command.addTask();
         }
     }
 }

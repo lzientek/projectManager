@@ -1,10 +1,12 @@
 package CLI;
 
 import BackEnd.Project;
+import BackEnd.ProjectTask;
 import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -83,5 +85,46 @@ public class Command {
     private static String getAnswer(String question, Scanner sc) {
         System.out.println(question);
         return sc.nextLine();
+    }
+
+    public static void showProjects() {
+        try {
+            List<Project> projects = new JdbcProjectDao().loadProjects(StockageUser.user);
+            for (int i = 0; i < projects.size(); i++) {
+                System.out.println(projects.get(i).getId() + " : " + projects.get(i).getName());
+                System.out.println(projects.get(i).getDescription());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addTask() {
+        ProjectTask project = new ProjectTask();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ajout d'une task");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            project.setTaskAuthor(StockageUser.user);
+            project.getEmployeesWorkingOnIt().add(StockageUser.user);
+
+            showProjects();
+            project.setProject(new JdbcProjectDao().loadAProjectById(Integer.parseInt(getAnswer("project Id", sc))));
+            project.setName(getAnswer("Nom du task:", sc));
+            project.setDescription(getAnswer("description du task:", sc));
+
+            project.setBeginDate(formatter.parse(getAnswer("begin date (dd/MM/yyyy):", sc)));
+            project.setEndDate(formatter.parse(getAnswer("end date (dd/MM/yyyy):", sc)));
+
+            if (new JdbcProjectDao().createProjectTask(project))
+                System.out.println("enregistrer!");
+            else
+                System.out.println("error bitch!");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

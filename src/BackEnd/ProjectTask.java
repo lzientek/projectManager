@@ -2,6 +2,7 @@ package BackEnd;
 
 import DataBase.JdbcUserDao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class ProjectTask {
     private User taskAuthor;
     private Boolean isCompleted;
 
+    public ProjectTask() {
+        employeesWorkingOnIt = new ArrayList<User>();
+    }
     public ProjectTask(String name, String description, int id, Project project,
                        Date beginDate, Date endDate,
                        String[] employeesWorkingOnIt,
@@ -36,6 +40,17 @@ public class ProjectTask {
         }
         this.taskAuthor = taskAuthor;
         this.isCompleted = endDate.getTime() <= (new Date()).getTime();
+    }
+
+    public String getEmployeesWorkingOnItJoin() {
+        String toReturn = "";
+        for (int i = 0; i < employeesWorkingOnIt.size(); i++) {
+            if (i == 0)
+                toReturn = String.valueOf(employeesWorkingOnIt.get(i).getId());
+            else
+                toReturn += "-" + employeesWorkingOnIt.get(i).getId();
+        }
+        return toReturn;
     }
 
     public String getName() {
