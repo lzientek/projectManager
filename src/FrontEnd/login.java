@@ -7,12 +7,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 
 public class login extends JFrame {
@@ -28,37 +30,21 @@ public class login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					login frame = new login();
-					frame.setVisible(true);
-				
-					frame.setMinimumSize(new Dimension(450, 350));
-					
 					try{
-						UIManager.setLookAndFeel(new SyntheticaLookAndFeel() {
-							
-							/**
-							 * 
-							 */
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public String getName() {
-								// TODO Auto-generated method stub
-								return null;
-							}
-							
-							@Override
-							public String getID() {
-								// TODO Auto-generated method stub
-								return null;
-							}
-						});
+						UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
 							
 							
 					}catch(Exception e)
 					{
 						
 					}
+					
+					login frame = new login();
+					frame.setVisible(true);
+				
+					frame.setMinimumSize(new Dimension(450, 350));
+					
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,7 +69,7 @@ public class login extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
+		textField_1 = new JPasswordField();
 		textField_1.setBounds(221, 109, 86, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
