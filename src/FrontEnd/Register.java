@@ -65,19 +65,19 @@ public class Register extends JFrame {
 		contentPane.add(btnSubmit);
 		
 		JLabel lblRegister = new JLabel("Register");
-		lblRegister.setBounds(189, 11, 46, 14);
+		lblRegister.setBounds(189, 11, 68, 14);
 		contentPane.add(lblRegister);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(85, 67, 55, 14);
+		lblUsername.setBounds(85, 67, 90, 14);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(85, 116, 46, 14);
+		lblPassword.setBounds(85, 116, 94, 14);
 		contentPane.add(lblPassword);
 		
 		JLabel lblCheckPassword = new JLabel("Check Password");
-		lblCheckPassword.setBounds(85, 156, 90, 14);
+		lblCheckPassword.setBounds(85, 156, 104, 14);
 		contentPane.add(lblCheckPassword);
 	}
 }
