@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,6 +11,9 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
+
+import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 
 public class login extends JFrame {
 
@@ -26,6 +30,36 @@ public class login extends JFrame {
 				try {
 					login frame = new login();
 					frame.setVisible(true);
+				
+					frame.setMinimumSize(new Dimension(450, 350));
+					
+					try{
+						UIManager.setLookAndFeel(new SyntheticaLookAndFeel() {
+							
+							/**
+							 * 
+							 */
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public String getName() {
+								// TODO Auto-generated method stub
+								return null;
+							}
+							
+							@Override
+							public String getID() {
+								// TODO Auto-generated method stub
+								return null;
+							}
+						});
+							
+							
+					}catch(Exception e)
+					{
+						
+					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,11 +105,13 @@ public class login extends JFrame {
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(114, 112, 46, 14);
+		lblPassword.setBounds(114, 112, 75, 17);
 		contentPane.add(lblPassword);
 		
 		JLabel lblNotRegistered = new JLabel("Not registered ? Follow the link");
-		lblNotRegistered.setBounds(135, 187, 154, 14);
+		lblNotRegistered.setBounds(135, 187, 189, 20);
 		contentPane.add(lblNotRegistered);
+		
+		
 	}
 }
