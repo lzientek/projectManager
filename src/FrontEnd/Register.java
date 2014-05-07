@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 
 import DataBase.JdbcUserDao;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Register extends JFrame {
 
@@ -19,6 +21,7 @@ public class Register extends JFrame {
     private JTextField textField_password;
     private JTextField textField_password1;
     private JCheckBox checkBox_isManager;
+    private final Action action = new SwingAction();
 
 	/**
 	 * Create the frame.
@@ -90,10 +93,34 @@ public class Register extends JFrame {
 		JLabel lblCheckPassword = new JLabel("Check Password");
         lblCheckPassword.setBounds(85, 150, 104, 14);
         contentPane.add(lblCheckPassword);
+        
+        JButton btnBackToLogin = new JButton("back to login");
+        btnBackToLogin.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnBackToLogin.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		Login frame = new Login();
+        		frame.setVisible(true);
+        		dispose();
+        	}
+        });
+        btnBackToLogin.setBounds(10, 11, 104, 23);
+        contentPane.add(btnBackToLogin);
 	}
 
     private void goToLogin() {
         Login frame = new Login();
         frame.setVisible(true);
     }
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }
