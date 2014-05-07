@@ -3,6 +3,8 @@ package FrontEnd;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -79,12 +81,17 @@ public class Register extends JFrame {
         btnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo : check le mail (regex)    +
-                if (textField_password.getText().equals(textField_password1.getText())) {
-                    new JdbcUserDao().createUser(textField_mail.getText(),
-                            textField_password.getText(),
-                            checkBox_isManager.isSelected());
-                }
+                Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$");
+                Matcher m = p.matcher(textField_mail.getText().toUpperCase());
+                if (m.matches()) {
+                    if (textField_password.getText().equals(textField_password1.getText())) {
+                        new JdbcUserDao().createUser(textField_mail.getText(),
+                                textField_password.getText(),
+                                checkBox_isManager.isSelected());
+                    } else
+                        JOptionPane.showMessageDialog((Component) e.getSource(), "Les deux mot de passe doivent etre les meme");
+                } else
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Le mail doit etre valide");
             }
         });
         btnSubmit.setBounds(189, 240, 86, 23);
