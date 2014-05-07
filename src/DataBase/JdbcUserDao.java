@@ -1,15 +1,16 @@
 package DataBase;
 
-import BackEnd.LocalUser;
-import BackEnd.User;
-import DataBase.Interface.UserDao;
-import com.sun.deploy.util.StringUtils;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import BackEnd.LocalUser;
+import BackEnd.User;
+import DataBase.Interface.UserDao;
+
+import com.sun.deploy.util.StringUtils;
 
 /**
  * Created by lucas on 04/05/2014.

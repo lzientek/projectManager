@@ -5,7 +5,6 @@ import BackEnd.Project;
 import BackEnd.ProjectTask;
 import DataBase.Interface.ProjectDao;
 import com.sun.deploy.util.StringUtils;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
