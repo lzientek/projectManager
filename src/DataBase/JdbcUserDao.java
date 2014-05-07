@@ -16,8 +16,13 @@ import java.util.List;
  */
 public class JdbcUserDao extends JdbcDao implements UserDao {
 
-    public JdbcUserDao() throws Exception {
-        connect();
+    public JdbcUserDao() {
+        try {
+            connect();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
     }
 
     @Override

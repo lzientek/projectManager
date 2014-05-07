@@ -1,26 +1,27 @@
 package FrontEnd;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JPasswordField;
-import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import DataBase.JdbcUserDao;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 
 public class Register extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+    private JTextField textField_mail;
+    private JTextField textField_password;
+    private JTextField textField_password1;
 
 	/**
 	 * Made by gael.
@@ -53,28 +54,43 @@ public class Register extends JFrame {
 	public Register() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+        setMinimumSize(new Dimension(450, 300));
+        contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		textField = new JTextField();
-		textField.setBounds(189, 64, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JPasswordField();
-		textField_1.setBounds(189, 113, 86, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JPasswordField();
-		textField_2.setBounds(189, 153, 86, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
-		
+
+        textField_mail = new JTextField();
+        textField_mail.setBounds(189, 60, 150, 20);
+        contentPane.add(textField_mail);
+        textField_mail.setColumns(20);
+
+        textField_password = new JPasswordField();
+        textField_password.setBounds(189, 105, 150, 20);
+        contentPane.add(textField_password);
+        textField_password.setColumns(20);
+
+        textField_password1 = new JPasswordField();
+        textField_password1.setBounds(189, 150, 150, 20);
+        contentPane.add(textField_password1);
+        textField_password1.setColumns(20);
+
+
+
+
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(189, 196, 86, 23);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo : check le mail (regex)
+                if (textField_password.getText().equals(textField_password1.getText())) {
+                    new JdbcUserDao().createUser(textField_mail.getText(),
+                            textField_password.getText(),
+                            true);
+                }
+            }
+        });
+        btnSubmit.setBounds(189, 196, 86, 23);
 		contentPane.add(btnSubmit);
 		
 		JLabel lblRegister = new JLabel("Register");

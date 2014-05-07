@@ -3,6 +3,8 @@ package FrontEnd;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -77,8 +79,14 @@ public class login extends JFrame {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.setBounds(167, 227, 89, 23);
 		contentPane.add(btnRegister);
-		
-		JButton btnLogin = new JButton("Login");
+        btnRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo :code pour aller vers register
+            }
+        });
+
+        JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(167, 151, 89, 23);
 		contentPane.add(btnLogin);
 		
