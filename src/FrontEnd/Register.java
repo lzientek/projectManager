@@ -21,31 +21,6 @@ public class Register extends JFrame {
     private JCheckBox checkBox_isManager;
 
 	/**
-	 * Made by gael.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					try{
-						UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
-							
-							
-					}catch(Exception e)
-					{
-						
-					}
-					
-					Register frame = new Register();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public Register() {
@@ -88,6 +63,8 @@ public class Register extends JFrame {
                         new JdbcUserDao().createUser(textField_mail.getText(),
                                 textField_password.getText(),
                                 checkBox_isManager.isSelected());
+                        dispose();
+                        goToLogin();
                     } else
                         JOptionPane.showMessageDialog((Component) e.getSource(), "Les deux mot de passe doivent etre les meme");
                 } else
@@ -114,4 +91,9 @@ public class Register extends JFrame {
         lblCheckPassword.setBounds(85, 150, 104, 14);
         contentPane.add(lblCheckPassword);
 	}
+
+    private void goToLogin() {
+        Login frame = new Login();
+        frame.setVisible(true);
+    }
 }

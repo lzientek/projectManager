@@ -1,6 +1,9 @@
-import FrontEnd.UserWindow;
+import FrontEnd.Login;
+import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 
+import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
 
 public class Main {
 
@@ -9,6 +12,13 @@ public class Main {
         try {
             Class.forName(
                     com.mysql.jdbc.Driver.class.getName());
+            try {
+                UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+            } catch (UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         } catch (ClassNotFoundException ex) {
             System.out.println("Can’t load the Driver");
         }
@@ -16,12 +26,8 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                try {
-                    UserWindow frame = new UserWindow();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Login login = new Login();
+                login.setVisible(true);
             }
         });
     }
