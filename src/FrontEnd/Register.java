@@ -4,14 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
 
 import DataBase.JdbcUserDao;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
@@ -22,6 +16,7 @@ public class Register extends JFrame {
     private JTextField textField_mail;
     private JTextField textField_password;
     private JTextField textField_password1;
+    private JCheckBox checkBox_isManager;
 
 	/**
 	 * Made by gael.
@@ -53,8 +48,8 @@ public class Register extends JFrame {
 	 */
 	public Register() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-        setMinimumSize(new Dimension(450, 300));
+        setBounds(100, 100, 450, 320);
+        setMinimumSize(new Dimension(450, 320));
         contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -75,38 +70,41 @@ public class Register extends JFrame {
         contentPane.add(textField_password1);
         textField_password1.setColumns(20);
 
-
+        checkBox_isManager = new JCheckBox("Manager");
+        checkBox_isManager.setBounds(189, 195, 150, 20);
+        contentPane.add(checkBox_isManager);
 
 
 		JButton btnSubmit = new JButton("Submit");
         btnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo : check le mail (regex)
+                //todo : check le mail (regex)    +
                 if (textField_password.getText().equals(textField_password1.getText())) {
                     new JdbcUserDao().createUser(textField_mail.getText(),
                             textField_password.getText(),
-                            true);
+                            checkBox_isManager.isSelected());
                 }
             }
         });
-        btnSubmit.setBounds(189, 196, 86, 23);
-		contentPane.add(btnSubmit);
+        btnSubmit.setBounds(189, 240, 86, 23);
+        contentPane.add(btnSubmit);
 		
 		JLabel lblRegister = new JLabel("Register");
-		lblRegister.setBounds(189, 11, 68, 14);
-		contentPane.add(lblRegister);
+        lblRegister.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));
+        lblRegister.setBounds(189, 0, 200, 50);
+        contentPane.add(lblRegister);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(85, 67, 90, 14);
-		contentPane.add(lblUsername);
+        lblUsername.setBounds(85, 60, 90, 14);
+        contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(85, 116, 94, 14);
-		contentPane.add(lblPassword);
+        lblPassword.setBounds(85, 105, 94, 14);
+        contentPane.add(lblPassword);
 		
 		JLabel lblCheckPassword = new JLabel("Check Password");
-		lblCheckPassword.setBounds(85, 156, 104, 14);
-		contentPane.add(lblCheckPassword);
+        lblCheckPassword.setBounds(85, 150, 104, 14);
+        contentPane.add(lblCheckPassword);
 	}
 }
