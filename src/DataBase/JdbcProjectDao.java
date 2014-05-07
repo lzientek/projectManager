@@ -106,10 +106,9 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             pstmt.setInt(1, id);
 
             ResultSet result = pstmt.executeQuery();
-            //todo : chaeck
 
             result.next();
-            Project projectToReturn = new Project(result.getString("name"), result.getString("employeeOnIt").split("-"),
+            Project projectToReturn = new Project(result.getString("name"), result.getString("employeesOnIt").split("-"),
                     result.getInt("projectadvencement"), id,
                     new JdbcUserDao().loadUserById(result.getInt("author")),
                     result.getDate("beginDate"),
