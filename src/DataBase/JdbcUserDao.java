@@ -41,8 +41,6 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
             pstmt.executeUpdate();
             return true;
         } catch (Exception e) {
-            //System.out.println("error!"+e.getMessage());
-
             return false;
         }
     }
@@ -69,7 +67,10 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
 
     @Override
     public Boolean registerUser(LocalUser user) {
-        return null;
+        return createUser(
+                user.getMail(),
+                user.getPassword(),
+                user.getIsManager());
     }
 
     @Override

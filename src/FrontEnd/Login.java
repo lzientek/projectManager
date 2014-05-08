@@ -1,5 +1,8 @@
 package FrontEnd;
 
+import BackEnd.StockageUser;
+import DataBase.JdbcUserDao;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -9,9 +12,8 @@ import java.awt.event.ActionListener;
 public class Login extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
-
+    private JTextField textField_mail;
+    private JTextField textField_pass;
 
     /**
      * Create the frame.
@@ -26,15 +28,15 @@ public class Login extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        textField = new JTextField();
-        textField.setBounds(189, 58, 200, 20);
-        contentPane.add(textField);
-        textField.setColumns(10);
+        textField_mail = new JTextField();
+        textField_mail.setBounds(189, 58, 200, 20);
+        contentPane.add(textField_mail);
+        textField_mail.setColumns(10);
 
-        textField_1 = new JPasswordField();
-        textField_1.setBounds(189, 109, 200, 20);
-        contentPane.add(textField_1);
-        textField_1.setColumns(10);
+        textField_pass = new JPasswordField();
+        textField_pass.setBounds(189, 109, 200, 20);
+        contentPane.add(textField_pass);
+        textField_pass.setColumns(10);
 
         JButton btnRegister = new JButton("Register");
         btnRegister.setBounds(167, 227, 89, 23);
@@ -51,6 +53,17 @@ public class Login extends JFrame {
         JButton btnLogin = new JButton("Login");
         btnLogin.setBounds(167, 151, 89, 23);
         contentPane.add(btnLogin);
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StockageUser.user = new JdbcUserDao().connectUser(textField_mail.getText(), textField_pass.getText());
+                if (StockageUser.user != null) {
+                    AppFrame appFrame = new AppFrame();
+                    appFrame.setVisible(true);
+                    dispose();
+                }
+            }
+        });
 
         JLabel lblRegister = new JLabel("Login");
         lblRegister.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));

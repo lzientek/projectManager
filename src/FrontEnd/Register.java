@@ -11,29 +11,30 @@ import javax.swing.border.EmptyBorder;
 
 import DataBase.JdbcUserDao;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Register extends JFrame {
 
-	private JPanel contentPane;
+    private JPanel contentPane;
     private JTextField textField_mail;
     private JTextField textField_password;
     private JTextField textField_password1;
     private JCheckBox checkBox_isManager;
     private final Action action = new SwingAction();
 
-	/**
-	 * Create the frame.
-	 */
-	public Register() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    /**
+     * Create the frame.
+     */
+    public Register() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 320);
         setMinimumSize(new Dimension(450, 320));
         contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
         textField_mail = new JTextField();
         textField_mail.setBounds(189, 60, 150, 20);
@@ -54,8 +55,7 @@ public class Register extends JFrame {
         checkBox_isManager.setBounds(189, 195, 150, 20);
         contentPane.add(checkBox_isManager);
 
-
-		JButton btnSubmit = new JButton("Submit");
+        JButton btnSubmit = new JButton("Submit");
         btnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,51 +76,49 @@ public class Register extends JFrame {
         });
         btnSubmit.setBounds(189, 240, 86, 23);
         contentPane.add(btnSubmit);
-		
-		JLabel lblRegister = new JLabel("Register");
+
+        JLabel lblRegister = new JLabel("Register");
         lblRegister.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));
         lblRegister.setBounds(189, 0, 200, 50);
         contentPane.add(lblRegister);
-		
-		JLabel lblUsername = new JLabel("Username");
+
+        JLabel lblUsername = new JLabel("Username");
         lblUsername.setBounds(85, 60, 90, 14);
         contentPane.add(lblUsername);
-		
-		JLabel lblPassword = new JLabel("Password");
+
+        JLabel lblPassword = new JLabel("Password");
         lblPassword.setBounds(85, 105, 94, 14);
         contentPane.add(lblPassword);
-		
-		JLabel lblCheckPassword = new JLabel("Check Password");
+
+        JLabel lblCheckPassword = new JLabel("Check Password");
         lblCheckPassword.setBounds(85, 150, 104, 14);
         contentPane.add(lblCheckPassword);
-        
+
         JButton btnBackToLogin = new JButton("back to login");
-        btnBackToLogin.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
         btnBackToLogin.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		Login frame = new Login();
-        		frame.setVisible(true);
-        		dispose();
-        	}
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Login frame = new Login();
+                frame.setVisible(true);
+                dispose();
+            }
         });
         btnBackToLogin.setBounds(10, 11, 104, 23);
         contentPane.add(btnBackToLogin);
-	}
+    }
 
     private void goToLogin() {
         Login frame = new Login();
         frame.setVisible(true);
     }
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+
+    private class SwingAction extends AbstractAction {
+        public SwingAction() {
+            putValue(NAME, "SwingAction");
+            putValue(SHORT_DESCRIPTION, "Some short description");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
 }

@@ -14,8 +14,12 @@ import java.util.List;
  * Created by lucas on 04/05/2014.
  */
 public class JdbcProjectDao extends JdbcDao implements ProjectDao {
-    public JdbcProjectDao() throws Exception {
-        connect();
+    public JdbcProjectDao() {
+        try {
+            connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
