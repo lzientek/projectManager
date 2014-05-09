@@ -12,23 +12,23 @@ public class Main {
         try {
             Class.forName(
                     com.mysql.jdbc.Driver.class.getName());
-            try {
-                UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
-            } catch (UnsupportedLookAndFeelException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } catch (ClassNotFoundException ex) {
+
+            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+
+        } catch (Exception ex) {
             System.out.println("Can’t load the Driver");
         }
 
-        EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                Login login = new Login();
-                login.setVisible(true);
-            }
-        });
+        EventQueue.invokeLater(new
+
+                                       Runnable() {
+
+                                           public void run() {
+                                               Login login = new Login();
+                                               login.setVisible(true);
+                                           }
+    }
+        );
     }
 }

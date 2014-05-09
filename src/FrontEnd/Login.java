@@ -61,7 +61,9 @@ public class Login extends JFrame {
                     AppFrame appFrame = new AppFrame();
                     appFrame.setVisible(true);
                     dispose();
-                }
+                } else
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur de connection verifiez vos login.");
+
             }
         });
 

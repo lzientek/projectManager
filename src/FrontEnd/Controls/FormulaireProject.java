@@ -1,25 +1,41 @@
 package FrontEnd.Controls;
 
 import BackEnd.Project;
+import DataBase.JdbcProjectDao;
+import FrontEnd.ActionListeners.DeleteUserlistener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by lucas on 08/05/2014.
  */
 public class FormulaireProject extends JPanel {
-    private final JTextField textField_name;
-    private final JTextArea textArea;
-    private final JTextField textField_DateDebut_Jour;
-    private final JTextField textField_DateDebut_Mois;
-    private final JTextField textField_DateDebut_Annee;
-    private final JTextField textField_DateFin_Jour;
-    private final JTextField textField_DateFin_Mois;
-    private final JTextField textField_DateFin_Annee;
+    private final SimpleDateFormat dateFormatter;
+    private JTextField textField_name;
+    private JTextArea textArea;
+    private JTextField textField_DateDebut_Jour;
+    private JTextField textField_DateDebut_Mois;
+    private JTextField textField_DateDebut_Annee;
+    private JTextField textField_DateFin_Jour;
+    private JTextField textField_DateFin_Mois;
+    private JTextField textField_DateFin_Annee;
+    private Panel panel_employee;
     private Project project;
 
+
     public FormulaireProject(Project project) {
+
+
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dayformatter = new SimpleDateFormat("dd");
+        SimpleDateFormat moisformatter = new SimpleDateFormat("MM");
+        SimpleDateFormat anneeformatter = new SimpleDateFormat("yyyy");
+
         this.project = project;
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
@@ -29,14 +45,21 @@ public class FormulaireProject extends JPanel {
         setLayout(gridBagLayout);
 
         JLabel lblNom = new JLabel("Nom : ");
-        GridBagConstraints gbc_lblNom = new GridBagConstraints();
-        gbc_lblNom.anchor = GridBagConstraints.EAST;
-        gbc_lblNom.insets = new Insets(0, 0, 5, 5);
-        gbc_lblNom.gridx = 1;
-        gbc_lblNom.gridy = 1;
-        add(lblNom, gbc_lblNom);
 
-        textField_name = new JTextField();
+
+        textField_name = new JTextField(project.getName());
+        textArea = new JTextArea(project.getDescription());
+        textField_DateDebut_Jour = new JTextField(dayformatter.format(project.getBeginDate()));
+        textField_DateDebut_Mois = new JTextField(moisformatter.format(project.getBeginDate()));
+        textField_DateDebut_Annee = new JTextField(anneeformatter.format(project.getBeginDate()));
+        textField_DateFin_Jour = new JTextField(dayformatter.format(project.getEndDate()));
+        textField_DateFin_Mois = new JTextField(moisformatter.format(project.getEndDate()));
+        textField_DateFin_Annee = new JTextField(anneeformatter.format(project.getEndDate()));
+
+        panel_employee = new Panel();
+        loadUsers();
+
+
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
@@ -53,7 +76,7 @@ public class FormulaireProject extends JPanel {
         gbc_lblDescription.gridy = 2;
         add(lblDescription, gbc_lblDescription);
 
-        textArea = new JTextArea();
+
         textArea.setRows(2);
         GridBagConstraints gbc_textArea = new GridBagConstraints();
         gbc_textArea.insets = new Insets(0, 0, 5, 5);
@@ -78,17 +101,14 @@ public class FormulaireProject extends JPanel {
         gbc_panel.gridy = 3;
         add(panel_dateDebut, gbc_panel);
 
-        textField_DateDebut_Jour = new JTextField();
         panel_dateDebut.add(textField_DateDebut_Jour);
-        textField_DateDebut_Jour.setColumns(10);
+        textField_DateDebut_Jour.setColumns(2);
 
-        textField_DateDebut_Mois = new JTextField();
         panel_dateDebut.add(textField_DateDebut_Mois);
-        textField_DateDebut_Mois.setColumns(10);
+        textField_DateDebut_Mois.setColumns(2);
 
-        textField_DateDebut_Annee = new JTextField();
         panel_dateDebut.add(textField_DateDebut_Annee);
-        textField_DateDebut_Annee.setColumns(10);
+        textField_DateDebut_Annee.setColumns(4);
 
         JLabel lblDateFin = new JLabel("date fin :");
         GridBagConstraints gbc_lblDateFin = new GridBagConstraints();
@@ -106,16 +126,13 @@ public class FormulaireProject extends JPanel {
         gbc_panel_1.gridy = 4;
         add(panel_DateDebut, gbc_panel_1);
 
-        textField_DateFin_Jour = new JTextField();
-        textField_DateFin_Jour.setColumns(10);
+        textField_DateFin_Jour.setColumns(2);
         panel_DateDebut.add(textField_DateFin_Jour);
 
-        textField_DateFin_Mois = new JTextField();
-        textField_DateFin_Mois.setColumns(10);
+        textField_DateFin_Mois.setColumns(2);
         panel_DateDebut.add(textField_DateFin_Mois);
 
-        textField_DateFin_Annee = new JTextField();
-        textField_DateFin_Annee.setColumns(10);
+        textField_DateFin_Annee.setColumns(4);
         panel_DateDebut.add(textField_DateFin_Annee);
 
         JLabel lblEmploySurLe = new JLabel("employ\u00E9 sur le projet:");
@@ -126,11 +143,63 @@ public class FormulaireProject extends JPanel {
         gbc_lblEmploySurLe.gridy = 5;
         add(lblEmploySurLe, gbc_lblEmploySurLe);
 
-        Panel panel_employee = new Panel();
+
         GridBagConstraints gbc_panel_employee = new GridBagConstraints();
         gbc_panel_employee.insets = new Insets(0, 0, 0, 5);
         gbc_panel_employee.gridx = 2;
         gbc_panel_employee.gridy = 5;
         add(panel_employee, gbc_panel_employee);
+
+
+        GridBagConstraints gbc_lblNom = new GridBagConstraints();
+        gbc_lblNom.anchor = GridBagConstraints.EAST;
+        gbc_lblNom.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNom.gridx = 1;
+        gbc_lblNom.gridy = 1;
+        add(lblNom, gbc_lblNom);
+        validate();
+    }
+
+    public void loadUsers() {
+
+        for (int i = 0; i < project.getEmployeesWorkingOnIt().size(); i++) {
+            panel_employee.add(
+                    new UserDeleteControl(
+                            project.getEmployeesWorkingOnIt().get(i),
+                            new DeleteUserlistener(
+                                    project.getEmployeesWorkingOnIt().get(i),
+                                    project.getEmployeesWorkingOnIt())
+                    )
+            );
+        }
+        JButton btnInvite = new JButton("invite");
+        btnInvite.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo : ajouter des participants
+            }
+        });
+        panel_employee.add(btnInvite);
+        if (this.isValid() && !new JdbcProjectDao().updateAProject(project))
+            JOptionPane.showMessageDialog(this, "Erreur d'enregistrement en base de donnée.");
+
+    }
+
+    public Project getProject() {
+        project.setName(textField_name.getText());
+        project.setDescription(textArea.getText());
+
+        try {
+            project.setBeginDate(dateFormatter.parse(textField_DateDebut_Jour.getText() + "/" +
+                    textField_DateDebut_Mois.getText() + "/" +
+                    textField_DateDebut_Annee.getText()));
+            project.setBeginDate(dateFormatter.parse(textField_DateFin_Jour.getText() + "/" +
+                    textField_DateFin_Mois.getText() + "/" +
+                    textField_DateFin_Annee.getText()));
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "date non valide.(bien mettre sous la forme 01)");
+
+        }
+        return project;
     }
 }

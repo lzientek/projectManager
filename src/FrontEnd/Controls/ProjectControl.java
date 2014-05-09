@@ -2,19 +2,27 @@ package FrontEnd.Controls;
 
 import BackEnd.Project;
 import BackEnd.StockageUser;
+import FrontEnd.PopUp.ModifProject;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
 /**
  * Created by lucas on 08/05/2014.
  */
 public class ProjectControl extends JPanel {
+    private JLabel lblName;
+    private JLabel lblPourcentage;
+    private JLabel lblNumberOfEmployees;
+    private JLabel lblBeginDate;
+    private JLabel lblEndDate;
+    private JButton btnModify;
     private Project project;
 
-    public ProjectControl(Project project) {
+    public ProjectControl(final Project project) {
         this.project = project;
 
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -24,17 +32,35 @@ public class ProjectControl extends JPanel {
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
+
+        //todo : ajouter le click
+
+        updateValues();
+        btnModify = new JButton("Modifier");
+
+        btnModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ModifProject(project, (Component) e.getSource());
+                //todo : recuperer le close pour executer update values
+            }
+        });
+
+        setGridBagConstraints();
+
+
+    }
+
+    public void updateValues() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        lblName = new JLabel(project.getName());
+        lblPourcentage = new JLabel("avancement : " + project.getProjectAdvancement() + "%");
+        lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
+        lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
+        lblEndDate = new JLabel(formatter.format(project.getEndDate()));
+    }
 
-
-        JLabel lblName = new JLabel(project.getName());
-        JLabel lblPourcentage = new JLabel("avancement : " + project.getProjectAdvancement() + "%");
-        JLabel lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
-        JLabel lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
-        JLabel lblEndDate = new JLabel(formatter.format(project.getEndDate()));
-        JButton btnModify = new JButton("Modifier");
-
-
+    private void setGridBagConstraints() {
         GridBagConstraints gbc_lblName = new GridBagConstraints();
         gbc_lblName.fill = GridBagConstraints.HORIZONTAL;
         gbc_lblName.insets = new Insets(0, 0, 5, 5);

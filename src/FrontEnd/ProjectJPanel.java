@@ -20,7 +20,7 @@ public class ProjectJPanel extends JPanel {
         add(lblProjects, BorderLayout.NORTH);
 
         JPanel projectsPanel = new JPanel();
-        projectsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        projectsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
         for (int i = 0; i < projects.size(); i++) {
             projectsPanel.add(new ProjectControl(projects.get(i)));
