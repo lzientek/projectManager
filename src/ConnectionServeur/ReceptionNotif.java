@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
+ * Created by lucas on 09/05/2014.
+ */
+
+
+/**
  * Created by lucas on 05/05/2014.
  */
 public class ReceptionNotif implements Runnable {
@@ -31,3 +36,5 @@ public class ReceptionNotif implements Runnable {
         }
     }
 }
+
+
