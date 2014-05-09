@@ -2,12 +2,16 @@ package FrontEnd.Controls;
 
 import BackEnd.Project;
 import BackEnd.StockageUser;
+import FrontEnd.ActionListeners.ProjectMouseClick;
+import FrontEnd.AppFrame;
 import FrontEnd.PopUp.ModifProject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 
 /**
@@ -21,10 +25,11 @@ public class ProjectControl extends JPanel {
     private JLabel lblEndDate;
     private JButton btnModify;
     private Project project;
+    private AppFrame appFrame;
 
-    public ProjectControl(final Project project) {
+    public ProjectControl(final Project project, AppFrame frame) {
         this.project = project;
-
+        appFrame = frame;
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -33,8 +38,6 @@ public class ProjectControl extends JPanel {
         setLayout(gridBagLayout);
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
 
-        //todo : ajouter le click
-
         updateValues();
         btnModify = new JButton("Modifier");
 
@@ -42,13 +45,12 @@ public class ProjectControl extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ModifProject(project, (Component) e.getSource());
-                //todo : recuperer le close pour executer update values
             }
         });
 
         setGridBagConstraints();
 
-
+        addMouseListener(new ProjectMouseClick(appFrame, project));
     }
 
     public void updateValues() {

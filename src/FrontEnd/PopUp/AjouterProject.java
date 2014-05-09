@@ -3,8 +3,9 @@ package FrontEnd.PopUp;
 import BackEnd.Project;
 import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
+import FrontEnd.AppFrame;
 import FrontEnd.Controls.FormulaireProject;
-import FrontEnd.Controls.ProjectControl;
+import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,9 +19,9 @@ import java.util.Date;
  */
 public class AjouterProject extends JFrame {
     private FormulaireProject formulaireProject;
-    private Component FenetreMere;
+    private final AppFrame FenetreMere;
 
-    public AjouterProject(Component fenetreMere) {
+    public AjouterProject(AppFrame fenetreMere) {
         FenetreMere = fenetreMere;
         setTitle("Nouveau Projet");
         setMinimumSize(new Dimension(550, 350));
@@ -29,7 +30,6 @@ public class AjouterProject extends JFrame {
         setContentPane(panel);
         panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         getContentPane().setLayout(new BorderLayout(5, 5));
@@ -37,22 +37,24 @@ public class AjouterProject extends JFrame {
         formulaireProject = new FormulaireProject(
                 new Project("Nom du projet",
                         new String[]{String.valueOf(StockageUser.user.getId())},
-                        0,
-                        0,
+                        0, 0,
                         StockageUser.user,
-                        new Date(),
-                        new Date(),
+                        new Date(), new Date(),
                         "Description")
         );
         getContentPane().add(formulaireProject, BorderLayout.CENTER);
 
-        JButton btnSave = new JButton("enregistrer");
+        final JButton btnSave = new JButton("enregistrer");
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Project p = formulaireProject.getProject();
-                if (new JdbcProjectDao().createAProject(p))
+                if (new JdbcProjectDao().createAProject(p)) {
+                    FenetreMere.getProjects().add(p);
+                    ProjectJPanel contenu = (ProjectJPanel) FenetreMere.getContenu();
+                    contenu.addToProjectList(p);
                     dispose();
+                }
                 else
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en BDD.");
 

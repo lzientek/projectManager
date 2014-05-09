@@ -28,6 +28,10 @@ public class Connexion implements Runnable {
         socket = s;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     public void run() {
 
         try {
@@ -54,7 +58,6 @@ public class Connexion implements Runnable {
 
             }
 
-            new NotifServeur(socket);
 
 
         } catch (IOException e) {

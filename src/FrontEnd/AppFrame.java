@@ -4,12 +4,11 @@ import BackEnd.Project;
 import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
 import FrontEnd.PopUp.AjouterProject;
+import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,9 +18,10 @@ import java.util.List;
 
 public class AppFrame extends JFrame {
 
-    private JPanel contentPane;
 
     private List<Project> projects;
+    private Project selectedProject;
+    private JPanel contenu;
 
     /**
      * Create the frame.
@@ -36,19 +36,24 @@ public class AppFrame extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        projects = new JdbcProjectDao().loadProjects(StockageUser.user);
+        reloadProjects();
 
         menuBar();
+
         validate();
         setVisible(true);
-        add(new ProjectJPanel(projects));
+        setContent(new ProjectJPanel(projects, this));
         revalidate();
+    }
+
+    private void reloadProjects() {
+        projects = new JdbcProjectDao().loadProjects(StockageUser.user);
     }
 
     private void menuBar() {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
-
+        final AppFrame af = this;
         JMenu mnAjouter = new JMenu("ajouter");
         menuBar.add(mnAjouter);
 
@@ -57,19 +62,37 @@ public class AppFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                AjouterProject ajouterProject = new AjouterProject((Component) e.getSource());
+                AjouterProject ajouterProject = new AjouterProject(af);
+
             }
         });
         mnAjouter.add(mntmNouveauProjet);
     }
 
-    public void setContentPane(JPanel contentPane) {
-        this.contentPane = contentPane;
-        setContentPane(contentPane);
+    public void setSelectedProject(Project selectedProject) {
+        this.selectedProject = selectedProject;
+    }
+
+    public void setContent(JPanel contentPane) {
+        contenu = contentPane;
+        getContentPane().removeAll();
+        getContentPane().add(contenu);
+    }
+
+    public JPanel getContenu() {
+        return contenu;
     }
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public Project getSelectedProject() {
+        return selectedProject;
     }
 }
 
