@@ -60,6 +60,8 @@ public class ProjectControl extends JPanel {
         lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
         lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
         lblEndDate = new JLabel(formatter.format(project.getEndDate()));
+        revalidate();
+        appFrame.getContentPane().revalidate();
     }
 
     private void setGridBagConstraints() {

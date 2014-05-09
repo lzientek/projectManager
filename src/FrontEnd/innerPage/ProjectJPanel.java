@@ -32,6 +32,7 @@ public class ProjectJPanel extends JPanel {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.add(projectsPanel);
         add(scrollPane, BorderLayout.CENTER);
+        appFrame.getContentPane().revalidate();
     }
 
     public void setProjectList(List<Project> projects) {

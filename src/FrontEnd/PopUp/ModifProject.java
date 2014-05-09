@@ -1,6 +1,7 @@
 package FrontEnd.PopUp;
 
 import BackEnd.Project;
+import DataBase.JdbcProjectDao;
 import FrontEnd.Controls.FormulaireProject;
 import FrontEnd.Controls.ProjectControl;
 
@@ -57,7 +58,9 @@ public class ModifProject extends JFrame {
                 project.setEmployeesWorkingOnIt(p.getEmployeesWorkingOnIt());
                 if (FenetreMere instanceof ProjectControl) {
                     ((ProjectControl) FenetreMere).updateValues();
+                    new JdbcProjectDao().updateAProject(project);
                 }
+                dispose();
             }
         });
         getContentPane().add(btnSave, BorderLayout.SOUTH);

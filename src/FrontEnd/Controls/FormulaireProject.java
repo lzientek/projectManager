@@ -193,7 +193,7 @@ public class FormulaireProject extends JPanel {
             project.setBeginDate(dateFormatter.parse(textField_DateDebut_Jour.getText() + "/" +
                     textField_DateDebut_Mois.getText() + "/" +
                     textField_DateDebut_Annee.getText()));
-            project.setBeginDate(dateFormatter.parse(textField_DateFin_Jour.getText() + "/" +
+            project.setEndDate(dateFormatter.parse(textField_DateFin_Jour.getText() + "/" +
                     textField_DateFin_Mois.getText() + "/" +
                     textField_DateFin_Annee.getText()));
         } catch (ParseException e) {
