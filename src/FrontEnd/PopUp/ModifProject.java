@@ -4,6 +4,7 @@ import BackEnd.Project;
 import DataBase.JdbcProjectDao;
 import FrontEnd.Controls.FormulaireProject;
 import FrontEnd.Controls.ProjectControl;
+import FrontEnd.Controls.TitleLabel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +36,7 @@ public class ModifProject extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         getContentPane().setLayout(new BorderLayout(5, 5));
-        getContentPane().add(new Label("Modifier le projet " + project.getName()), BorderLayout.NORTH);
+        getContentPane().add(new TitleLabel("Modifier le projet " + project.getName()), BorderLayout.NORTH);
         formulaireProject = new FormulaireProject(new Project(project.getName(),
                 project.getEmployeesWorkingOnItJoin().split("-"),
                 project.getProjectAdvancement(),

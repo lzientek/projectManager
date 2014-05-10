@@ -35,8 +35,8 @@ public class ProjectControl extends JPanel {
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
-        setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
-        setBackground(Color.white);
+
+        setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
         updateValues();
 
         validate();
@@ -44,7 +44,9 @@ public class ProjectControl extends JPanel {
 
     public void updateValues() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        lblName = new JLabel(project.getName());
+        lblName = new TitleLabel(project.getName());
+
+
         lblPourcentage = new JLabel("avancement : " + project.getProjectAdvancement() + "%");
         lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
         lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
@@ -58,7 +60,7 @@ public class ProjectControl extends JPanel {
             }
         });
         addMouseListener(new ProjectMouseClick(appFrame, project));
-
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
         removeAll();
         setGridBagConstraints();
 

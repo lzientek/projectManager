@@ -2,6 +2,7 @@ package FrontEnd;
 
 import BackEnd.StockageUser;
 import DataBase.JdbcUserDao;
+import FrontEnd.Controls.TitleLabel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -68,12 +69,12 @@ public class Login extends JFrame {
             }
         });
 
-        JLabel lblRegister = new JLabel("Login");
+        JLabel lblRegister = new TitleLabel("Login");
         lblRegister.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));
         lblRegister.setBounds(189, 0, 200, 50);
         contentPane.add(lblRegister);
 
-        JLabel lblUsername = new JLabel("Username");
+        JLabel lblUsername = new JLabel("E-mail");
         lblUsername.setBounds(114, 61, 63, 14);
         contentPane.add(lblUsername);
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import DataBase.JdbcUserDao;
+import FrontEnd.Controls.TitleLabel;
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 
 import java.awt.event.MouseAdapter;
@@ -77,7 +78,7 @@ public class Register extends JFrame {
         btnSubmit.setBounds(189, 240, 86, 23);
         contentPane.add(btnSubmit);
 
-        JLabel lblRegister = new JLabel("Register");
+        JLabel lblRegister = new TitleLabel("Register");
         lblRegister.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));
         lblRegister.setBounds(189, 0, 200, 50);
         contentPane.add(lblRegister);

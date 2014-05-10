@@ -30,7 +30,7 @@ public class AppFrame extends JFrame {
         setTitle("Projects");
 
         setUndecorated(true);
-        setSize(getToolkit().getScreenSize());
+        setBounds(100, 100, 800, 500);
         setLocationRelativeTo(null);
 
 

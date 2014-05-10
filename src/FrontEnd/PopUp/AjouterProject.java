@@ -5,6 +5,7 @@ import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
 import FrontEnd.AppFrame;
 import FrontEnd.Controls.FormulaireProject;
+import FrontEnd.Controls.TitleLabel;
 import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public class AjouterProject extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         getContentPane().setLayout(new BorderLayout(5, 5));
-        getContentPane().add(new Label("Creation d'un nouveau projet: "), BorderLayout.NORTH);
+        getContentPane().add(new TitleLabel("Creation d'un nouveau projet: "), BorderLayout.NORTH);
         formulaireProject = new FormulaireProject(
                 new Project("Nom du projet",
                         new String[]{String.valueOf(StockageUser.user.getId())},

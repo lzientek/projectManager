@@ -14,6 +14,7 @@ import java.util.List;
  * Created by lucas on 08/05/2014.
  */
 public class ProjectJPanel extends JPanel {
+
     private final JPanel projectsPanel;
     private AppFrame appFrame;
 
@@ -21,16 +22,19 @@ public class ProjectJPanel extends JPanel {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout(5, 5));
         appFrame = app;
-        JLabel lblProjects = new JLabel("Projects");
-        add(lblProjects, BorderLayout.NORTH);
+        //JLabel lblProjects = new JLabel("Projects");
+        //add(lblProjects, BorderLayout.NORTH);
 
         projectsPanel = new JPanel();
-        projectsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+        projectsPanel.setLayout(new BoxLayout(projectsPanel, BoxLayout.Y_AXIS));
 
         setProjectList(projects);
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.add(projectsPanel);
+        JScrollPane scrollPane = new JScrollPane(projectsPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         add(scrollPane, BorderLayout.CENTER);
         appFrame.getContentPane().revalidate();
     }
@@ -38,6 +42,7 @@ public class ProjectJPanel extends JPanel {
     public void setProjectList(List<Project> projects) {
         for (int i = 0; i < projects.size(); i++) {
             projectsPanel.add(new ProjectControl(projects.get(i), appFrame));
+            projectsPanel.add(Box.createVerticalStrut(10));//marge e pixel
         }
     }
 
