@@ -57,6 +57,7 @@ public class ModifProject extends JFrame {
                 project.setBeginDate(p.getBeginDate());
                 project.setEndDate(p.getEndDate());
                 project.setEmployeesWorkingOnIt(p.getEmployeesWorkingOnIt());
+
                 if (!new JdbcProjectDao().updateAProject(project))
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en base de donnée.");
 

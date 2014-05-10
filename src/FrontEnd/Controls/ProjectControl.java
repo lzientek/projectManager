@@ -10,14 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 
 /**
  * Created by lucas on 08/05/2014.
  */
 public class ProjectControl extends JPanel {
+
     private JLabel lblName;
     private JLabel lblPourcentage;
     private JLabel lblNumberOfEmployees;
@@ -37,18 +36,9 @@ public class ProjectControl extends JPanel {
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
-
+        setBackground(Color.white);
         updateValues();
-        final ProjectControl pc = this;
-        btnModify = new JButton("Modifier");
-        btnModify.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ModifProject(project, pc);
-            }
-        });
-        addMouseListener(new ProjectMouseClick(appFrame, project));
-        setGridBagConstraints();
+
         validate();
     }
 
@@ -59,7 +49,18 @@ public class ProjectControl extends JPanel {
         lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
         lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
         lblEndDate = new JLabel(formatter.format(project.getEndDate()));
+        final ProjectControl pc = this;
+        btnModify = new JButton("Modifier");
+        btnModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ModifProject(project, pc);
+            }
+        });
+        addMouseListener(new ProjectMouseClick(appFrame, project));
 
+        removeAll();
+        setGridBagConstraints();
 
         revalidate();
         appFrame.getContentPane().revalidate();

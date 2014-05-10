@@ -56,7 +56,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
             pstmt.setInt(2, project.getProjectAdvancement());
-            pstmt.setString(3, StringUtils.join(project.getEmployeesWorkingOnIt(), "-"));
+            pstmt.setString(3, project.getEmployeesWorkingOnItJoin());
             pstmt.setInt(4, project.getAuthor().getId());
             pstmt.setDate(5, new java.sql.Date(project.getBeginDate().getTime()));
             pstmt.setDate(6, new java.sql.Date(project.getEndDate().getTime()));
