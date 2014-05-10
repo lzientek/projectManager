@@ -39,18 +39,17 @@ public class ProjectControl extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
 
         updateValues();
+        final ProjectControl pc = this;
         btnModify = new JButton("Modifier");
-
         btnModify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ModifProject(project, (Component) e.getSource());
+                new ModifProject(project, pc);
             }
         });
-
-        setGridBagConstraints();
-
         addMouseListener(new ProjectMouseClick(appFrame, project));
+        setGridBagConstraints();
+        validate();
     }
 
     public void updateValues() {
@@ -60,6 +59,8 @@ public class ProjectControl extends JPanel {
         lblNumberOfEmployees = new JLabel("Nombre d'employés :" + project.getEmployeesWorkingOnIt().size());
         lblBeginDate = new JLabel(formatter.format(project.getBeginDate()) + " -> ");
         lblEndDate = new JLabel(formatter.format(project.getEndDate()));
+
+
         revalidate();
         appFrame.getContentPane().revalidate();
     }
@@ -107,5 +108,9 @@ public class ProjectControl extends JPanel {
         if (StockageUser.user.getIsManager())
             add(btnModify, gbc_btnModify);
 
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

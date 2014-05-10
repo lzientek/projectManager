@@ -20,7 +20,7 @@ public class ModifProject extends JFrame {
     private Project project;
     private Component FenetreMere;
 
-    public ModifProject(final Project project, final Component FenetreMere) {
+    public ModifProject(final Project project, final ProjectControl FenetreMere) {
 
         this.project = project;
         this.FenetreMere = FenetreMere;
@@ -52,14 +52,16 @@ public class ModifProject extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Project p = formulaireProject.getProject();
                 project.setName(p.getName());
+                project.setAuthor(p.getAuthor());
                 project.setDescription(p.getDescription());
                 project.setBeginDate(p.getBeginDate());
                 project.setEndDate(p.getEndDate());
                 project.setEmployeesWorkingOnIt(p.getEmployeesWorkingOnIt());
-                if (FenetreMere instanceof ProjectControl) {
-                    ((ProjectControl) FenetreMere).updateValues();
-                    new JdbcProjectDao().updateAProject(project);
-                }
+                if (!new JdbcProjectDao().updateAProject(project))
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en base de donnée.");
+
+                FenetreMere.updateValues();
+
                 dispose();
             }
         });

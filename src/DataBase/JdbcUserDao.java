@@ -77,7 +77,7 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
     public User loadUserById(int id) {
         try {
             String sql1 =
-                    "SELECT * FROM  users WHERE id=?";
+                    "SELECT * FROM  users WHERE idusers=?";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setInt(1, id);
 
