@@ -22,6 +22,11 @@ public class User {
         this.isManager = isManager;
     }
 
+    @Override
+    public String toString() {
+        return getMail();
+    }
+
     public int getId() {
         return id;
     }

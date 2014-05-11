@@ -18,5 +18,7 @@ public interface UserDao {
 
     public User loadUserById(int id);
 
+    public List<User> loadUsers();
+
     public List<User> loadUserByFromProject(String[] strings);
 }

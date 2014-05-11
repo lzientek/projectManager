@@ -3,6 +3,7 @@ package FrontEnd.Controls;
 import BackEnd.Project;
 import DataBase.JdbcProjectDao;
 import FrontEnd.ActionListeners.DeleteUserlistener;
+import FrontEnd.PopUp.AjouterUser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -176,7 +177,7 @@ public class FormulaireProject extends JPanel {
         btnInvite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo : ajouter des participants
+                new AjouterUser(project.getEmployeesWorkingOnIt());
             }
         });
         panel_employee.add(btnInvite);

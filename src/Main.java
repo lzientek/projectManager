@@ -18,7 +18,6 @@ public class Main {
             System.out.println("Can’t load the Driver or look and feel");
         }
 
-
         EventQueue.invokeLater(
                 new Runnable() {
                     public void run() {

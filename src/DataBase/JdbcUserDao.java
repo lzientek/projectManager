@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import BackEnd.LocalUser;
 import BackEnd.User;
@@ -88,6 +89,29 @@ public class JdbcUserDao extends JdbcDao implements UserDao {
                     result.getInt("isManager") == 1);
 
             return user;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Vector<User> loadUsers() {
+        try {
+            String sql1 =
+                    "SELECT * FROM  users";
+            PreparedStatement pstmt = connection.prepareStatement(sql1);
+
+            ResultSet result = pstmt.executeQuery();
+
+            Vector<User> listMail = new Vector<User>();
+
+
+            while (result.next()) {
+                listMail.add(new User(result.getInt("idusers"),
+                        result.getString("mail"),
+                        result.getInt("isManager") == 1));
+            }
+            return listMail;
         } catch (Exception e) {
             return null;
         }
