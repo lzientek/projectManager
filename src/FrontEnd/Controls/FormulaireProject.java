@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -44,7 +46,7 @@ public class FormulaireProject extends JPanel {
         gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
-
+        //affcihage----------
         JLabel lblNom = new JLabel("Nom : ");
 
 
@@ -158,26 +160,46 @@ public class FormulaireProject extends JPanel {
         gbc_lblNom.gridx = 1;
         gbc_lblNom.gridy = 1;
         add(lblNom, gbc_lblNom);
+
+        //fin affichage
+
         validate();
     }
 
     public void loadUsers() {
 
+        final FormulaireProject fp = this;
+
+
+        panel_employee.removeAll();
         for (int i = 0; i < project.getEmployeesWorkingOnIt().size(); i++) {
-            panel_employee.add(
-                    new UserDeleteControl(
+            UserDeleteControl userDeleteControl = new UserDeleteControl(
+                    project.getEmployeesWorkingOnIt().get(i),
+                    new DeleteUserlistener(
                             project.getEmployeesWorkingOnIt().get(i),
-                            new DeleteUserlistener(
-                                    project.getEmployeesWorkingOnIt().get(i),
-                                    project.getEmployeesWorkingOnIt())
-                    )
+                            project.getEmployeesWorkingOnIt(), fp)
+            );
+            panel_employee.add(
+                    userDeleteControl
             );
         }
+        revalidate();
+
+
         JButton btnInvite = new JButton("invite");
         btnInvite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AjouterUser(project.getEmployeesWorkingOnIt());
+                final AjouterUser ajouterUser = new AjouterUser(project.getEmployeesWorkingOnIt());
+                ajouterUser.setLocationRelativeTo(fp);
+                //on recupere le close de la fenetre pour metre a jour
+                ajouterUser.getBtnEnregistrer().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        project.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
+                        fp.loadUsers();
+                    }
+                });
             }
         });
         panel_employee.add(btnInvite);

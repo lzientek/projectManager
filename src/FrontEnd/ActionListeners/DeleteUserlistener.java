@@ -13,16 +13,17 @@ import java.util.List;
 public class DeleteUserlistener implements ActionListener {
     private User user;
     private List<User> userList;
+    private FormulaireProject form;
 
-    public DeleteUserlistener(User user, List<User> userList) {
+    public DeleteUserlistener(User user, List<User> userList, FormulaireProject form) {
         this.user = user;
         this.userList = userList;
+        this.form = form;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FormulaireProject form = (FormulaireProject) e.getSource();
-        form.loadUsers();
         userList.remove(user);
+        form.loadUsers();
     }
 }

@@ -6,6 +6,8 @@ import FrontEnd.Controls.TitleLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +15,13 @@ import java.util.Vector;
  * Created by lucas on 11/05/2014.
  */
 public class AjouterUser extends JFrame {
+    private final JComboBox comboBox;
+    private final JButton btnEnregistrer;
+
+    public JButton getBtnEnregistrer() {
+        return btnEnregistrer;
+    }
+
     public AjouterUser(List<User> utilisateurAexclure) {
 
         setTitle("Ajouter un utilisateur");
@@ -23,7 +32,8 @@ public class AjouterUser extends JFrame {
         JLabel lblNewLabel = new TitleLabel("Ajouter un utilisateur", 16);
         getContentPane().add(lblNewLabel, BorderLayout.NORTH);
 
-        JButton btnEnregistrer = new JButton("Ajouter");
+        btnEnregistrer = new JButton("Ajouter");
+
         btnEnregistrer.setHorizontalAlignment(SwingConstants.CENTER);
         getContentPane().add(btnEnregistrer, BorderLayout.SOUTH);
 
@@ -31,6 +41,14 @@ public class AjouterUser extends JFrame {
         getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+        comboBox = getjComboBoxFull(utilisateurAexclure);
+        panel.add(comboBox);
+        validate();
+        setVisible(true);
+
+    }
+
+    private JComboBox getjComboBoxFull(List<User> utilisateurAexclure) {
         Vector<User> listUser = new JdbcUserDao().loadUsers();
         if (listUser != null)
             for (int i = listUser.size() - 1; i >= 0; i--) {
@@ -46,10 +64,10 @@ public class AjouterUser extends JFrame {
         if (listUser != null)
             comboBox = new JComboBox(listUser);
         else comboBox = new JComboBox();
-        //todo: impletementer le click!
-        panel.add(comboBox);
-        validate();
-        setVisible(true);
+        return comboBox;
+    }
 
+    public User getSelectedItem() {
+        return (User) comboBox.getSelectedItem();
     }
 }

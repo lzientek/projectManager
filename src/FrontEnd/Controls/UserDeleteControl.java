@@ -13,6 +13,7 @@ public class UserDeleteControl extends JPanel {
     private final JButton btnSup;
     private User user;
 
+
     public UserDeleteControl(User user, ActionListener actionListenerDelete) {
         this.user = user;
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
