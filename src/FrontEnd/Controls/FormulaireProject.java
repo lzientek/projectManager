@@ -41,10 +41,10 @@ public class FormulaireProject extends JPanel {
 
         this.project = project;
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
+        gridBagLayout.columnWidths = new int[]{0, 0, 200, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-        gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
         //affcihage----------
         JLabel lblNom = new JLabel("Nom : ");
@@ -145,7 +145,10 @@ public class FormulaireProject extends JPanel {
         gbc_lblEmploySurLe.gridx = 1;
         gbc_lblEmploySurLe.gridy = 5;
         add(lblEmploySurLe, gbc_lblEmploySurLe);
+        panel_employee.setSize(new Dimension(300, 1));
+        WrapLayout mgr = new WrapLayout(WrapLayout.LEADING, 5, 5);
 
+        panel_employee.setLayout(mgr);
 
         GridBagConstraints gbc_panel_employee = new GridBagConstraints();
         gbc_panel_employee.insets = new Insets(0, 0, 0, 5);
@@ -198,6 +201,7 @@ public class FormulaireProject extends JPanel {
                     public void actionPerformed(ActionEvent e) {
                         project.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
                         fp.loadUsers();
+                        ajouterUser.dispose();
                     }
                 });
             }
