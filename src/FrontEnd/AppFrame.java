@@ -68,6 +68,7 @@ public class AppFrame extends JFrame {
         menuBar.add(mnAjouter);
 
         JMenuItem mntmNouveauProjet = new JMenuItem("nouveau projet");
+        mntmNouveauProjet.setEnabled(StockageUser.user.getIsManager());
         mntmNouveauProjet.addActionListener(new ActionListener() {
 
             @Override

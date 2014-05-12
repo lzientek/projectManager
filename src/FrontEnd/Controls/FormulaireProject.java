@@ -196,7 +196,7 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
         btnInvite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final AjouterUser ajouterUser = new AjouterUser(project.getEmployeesWorkingOnIt());
+                final AjouterUser ajouterUser = new AjouterUser(project.getEmployeesWorkingOnIt(), true);
                 ajouterUser.setLocationRelativeTo(fp);
                 //on recupere le close de la fenetre pour metre a jour
                 ajouterUser.getBtnEnregistrer().addActionListener(new ActionListener() {

@@ -57,14 +57,13 @@ public class AjouterTask extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ProjectTask t = formulaireTask.getProject();
                 if (new JdbcProjectDao().createProjectTask(t)) {
-                    project.getProjectTasks().add(t);
                     NotifServeur.getNotifServeur().emission("nt");
-
+                    FullScreenProjectJPanel contenu = (FullScreenProjectJPanel) FenetreMere.getContenu();
+                    contenu.addToTaskList(t);
                     dispose();
                 } else
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en BDD.");
 
-                //todo reload la page et ajouter la requete au serveur
             }
         });
         getContentPane().add(btnSave, BorderLayout.SOUTH);

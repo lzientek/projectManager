@@ -23,14 +23,8 @@ public class Connexion implements Runnable {
     private BufferedReader in = null;
     private boolean connect = false;
 
-    private static Connexion connexionServeur;
-
-    public static Connexion getConnexionServeur() {
-        return connexionServeur;
-    }
 
     public Connexion(Socket s) {
-        connexionServeur = this;
         socket = s;
     }
 
@@ -44,26 +38,20 @@ public class Connexion implements Runnable {
 
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+            String reponse;
 
             while (!connect) {
-
-                if (in.readLine() == "authId") {
-                    out.println(StockageUser.user.getId());
-                    out.flush();
-                }
-                if (in.readLine() == "authMail") {
-                    out.println(StockageUser.user.getMail());
-                    out.flush();
-                }
-                if (in.readLine().equals("connecte")) {
+                reponse = in.readLine();
+                if (reponse.equals("connecte")) {
                     connect = true;
+                    out.println("ok");
+                    out.flush();
+                    new NotifServeur(socket);
                 } else {
                     System.err.println("erreur de connexion");
                 }
 
             }
-
 
 
         } catch (IOException e) {

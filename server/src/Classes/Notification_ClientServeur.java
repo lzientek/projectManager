@@ -16,14 +16,12 @@ public class Notification_ClientServeur implements Runnable {
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
-    private String login = "zero";
     private Thread t3, t4;
 
 
-    public Notification_ClientServeur(Socket s, String log) {
+    public Notification_ClientServeur(Socket s) {
 
         socket = s;
-        login = log;
     }
 
     public void run() {
@@ -32,12 +30,12 @@ public class Notification_ClientServeur implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
 
-            Thread t3 = new Thread(new Reception(in, out, login));
+            Thread t3 = new Thread(new Reception(in, out));
             t3.start();
 
 
         } catch (IOException e) {
-            System.err.println(login + "s'est déconnecté ");
+            System.err.println(socket.getInetAddress() + "s'est déconnecté ");
         }
     }
 }

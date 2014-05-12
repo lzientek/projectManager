@@ -2,6 +2,7 @@ package FrontEnd.Controls;
 
 import BackEnd.Project;
 import BackEnd.ProjectTask;
+import BackEnd.User;
 import DataBase.JdbcProjectDao;
 import FrontEnd.ActionListeners.DeleteUserlistener;
 import FrontEnd.PopUp.AjouterUser;
@@ -14,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by lucas on 08/05/2014.
@@ -42,7 +44,7 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
 
         this.task = task;
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[]{0, 0, 200, 0, 0};
+        gridBagLayout.columnWidths = new int[]{0, 0, 300, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
@@ -156,6 +158,7 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         GridBagConstraints gbc_panel_employee = new GridBagConstraints();
+        gbc_panel_employee.fill = GridBagConstraints.VERTICAL;
         gbc_panel_employee.insets = new Insets(0, 0, 0, 5);
         gbc_panel_employee.gridx = 2;
         gbc_panel_employee.gridy = 5;
@@ -199,17 +202,28 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
         btnInvite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final AjouterUser ajouterUser = new AjouterUser(task.getEmployeesWorkingOnIt());
-                ajouterUser.setLocationRelativeTo(ft);
-                //on recupere le close de la fenetre pour metre a jour
-                ajouterUser.getBtnEnregistrer().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        task.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
-                        ft.loadUsers();
-                        ajouterUser.dispose();
+                java.util.List<User> employeesWorkingOnIt = task.getProject().getEmployeesWorkingOnIt();
+                for (int i = employeesWorkingOnIt.size() - 1; i >= 0; i--)
+                    for (int j = 0; j < task.getEmployeesWorkingOnIt().size(); j++) {
+                        if (task.getEmployeesWorkingOnIt().get(j).getId() ==
+                                task.getProject().getEmployeesWorkingOnIt().get(i).getId())
+                            employeesWorkingOnIt.remove(i);
                     }
-                });
+                if (employeesWorkingOnIt.size() > 0) {
+                    final AjouterUser ajouterUser = new AjouterUser(employeesWorkingOnIt, false);
+                    ajouterUser.setLocationRelativeTo(ft);
+                    //on recupere le close de la fenetre pour metre a jour
+                    ajouterUser.getBtnEnregistrer().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            task.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
+                            ft.loadUsers();
+                            ajouterUser.dispose();
+                        }
+                    });
+                } else
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Tout les utilisateurs possible ajouter!");
+
             }
         });
         panel_employee.add(btnInvite);

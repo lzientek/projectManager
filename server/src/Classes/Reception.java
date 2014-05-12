@@ -9,13 +9,11 @@ public class Reception implements Runnable {
     private PrintWriter out;
 
     private BufferedReader in;
-    private String message = null, login = null;
+    private String message = null;
 
-    public Reception(BufferedReader in, PrintWriter out,
-                     String login) {
+    public Reception(BufferedReader in, PrintWriter out) {
 
         this.in = in;
-        this.login = login;
         this.out = out;
     }
 
@@ -28,8 +26,10 @@ public class Reception implements Runnable {
                 out.println(message);
                 out.flush();
             } catch (IOException e) {
+                System.out.println("deconnecter!");
 
                 e.printStackTrace();
+                break;
             }
         }
     }

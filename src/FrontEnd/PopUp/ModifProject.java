@@ -40,7 +40,6 @@ public class ModifProject extends JFrame {
         getContentPane().add(new TitleLabel("Modifier le projet " + project.getName()), BorderLayout.NORTH);
         formulaireProject = new FormulaireProject(new Project(project.getName(),
                 project.getEmployeesWorkingOnItJoin().split("-"),
-                project.getProjectAdvancement(),
                 project.getId(),
                 project.getAuthor(),
                 project.getBeginDate(),

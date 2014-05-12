@@ -22,7 +22,6 @@ public class Command {
         try {
             project.setAuthor(StockageUser.user);
             project.getEmployeesWorkingOnIt().add(StockageUser.user);
-            project.setProjectAdvancement(0);
 
             project.setName(getAnswer("Nom du projet:", sc));
             project.setDescription(getAnswer("description du projet:", sc));

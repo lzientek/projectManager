@@ -39,7 +39,7 @@ public class AjouterProject extends JFrame {
         formulaireProject = new FormulaireProject(
                 new Project("Nom du projet",
                         new String[]{String.valueOf(StockageUser.user.getId())},
-                        0, 0,
+                        0,
                         StockageUser.user,
                         new Date(), new Date(),
                         "Description")
@@ -57,11 +57,9 @@ public class AjouterProject extends JFrame {
                     ProjectJPanel contenu = (ProjectJPanel) FenetreMere.getContenu();
                     contenu.addToProjectList(p);
                     dispose();
-                }
-                else
+                } else
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en BDD.");
 
-                //todo reload la page et ajouter la requete au serveur
             }
         });
         getContentPane().add(btnSave, BorderLayout.SOUTH);

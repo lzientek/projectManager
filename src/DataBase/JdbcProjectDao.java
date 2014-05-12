@@ -5,6 +5,7 @@ import BackEnd.Project;
 import BackEnd.ProjectTask;
 import DataBase.Interface.ProjectDao;
 import com.sun.deploy.util.StringUtils;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -26,18 +27,17 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     public Boolean createAProject(Project project) {
         try {
             String sql1 =
-                    "INSERT INTO projects (name,projectadvencement,employeesOnIt," +
+                    "INSERT INTO projects (name,employeesOnIt," +
                             "author,beginDate,endDate,description)"
-                            + " VALUES (?,?,?,?,?,?,?)";
+                            + " VALUES (?,?,?,?,?,?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
-            pstmt.setInt(2, project.getProjectAdvancement());
-            pstmt.setString(3, project.getEmployeesWorkingOnItJoin());
-            pstmt.setInt(4, project.getAuthor().getId());
-            pstmt.setDate(5, new java.sql.Date(project.getBeginDate().getTime()));
-            pstmt.setDate(6, new java.sql.Date(project.getEndDate().getTime()));
-            pstmt.setString(7, project.getDescription());
+            pstmt.setString(2, project.getEmployeesWorkingOnItJoin());
+            pstmt.setInt(3, project.getAuthor().getId());
+            pstmt.setDate(4, new java.sql.Date(project.getBeginDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(project.getEndDate().getTime()));
+            pstmt.setString(6, project.getDescription());
             pstmt.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -51,17 +51,16 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
     public Boolean updateAProject(Project project) {
         try {
             String sql1 =
-                    "UPDATE projects SET name =?,projectadvencement=?,employeesOnIt=?,author=?" +
+                    "UPDATE projects SET name =?,employeesOnIt=?,author=?" +
                             ",beginDate=?,endDate=?,description=? WHERE idprojects=?";
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, project.getName());
-            pstmt.setInt(2, project.getProjectAdvancement());
-            pstmt.setString(3, project.getEmployeesWorkingOnItJoin());
-            pstmt.setInt(4, project.getAuthor().getId());
-            pstmt.setDate(5, new java.sql.Date(project.getBeginDate().getTime()));
-            pstmt.setDate(6, new java.sql.Date(project.getEndDate().getTime()));
-            pstmt.setString(7, project.getDescription());
-            pstmt.setInt(8, project.getId());
+            pstmt.setString(2, project.getEmployeesWorkingOnItJoin());
+            pstmt.setInt(3, project.getAuthor().getId());
+            pstmt.setDate(4, new java.sql.Date(project.getBeginDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(project.getEndDate().getTime()));
+            pstmt.setString(6, project.getDescription());
+            pstmt.setInt(7, project.getId());
 
             pstmt.executeUpdate();
             return true;
@@ -85,8 +84,8 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
 
             while (result.next()) {
                 projectArrayList.add(new Project(
-                        result.getString("name"), result.getString("employeesOnIt").split("-"),
-                        result.getInt("projectadvencement"), result.getInt("idprojects"),
+                        result.getString("name"), result.getString("employeesOnIt").split("-")
+                        , result.getInt("idprojects"),
                         new JdbcUserDao().loadUserById(result.getInt("author")),
                         result.getDate("beginDate"),
                         result.getDate("endDate"),
@@ -112,7 +111,7 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
 
             result.next();
             Project projectToReturn = new Project(result.getString("name"), result.getString("employeesOnIt").split("-"),
-                    result.getInt("projectadvencement"), id,
+                    id,
                     new JdbcUserDao().loadUserById(result.getInt("author")),
                     result.getDate("beginDate"),
                     result.getDate("endDate"),
@@ -220,9 +219,9 @@ public class JdbcProjectDao extends JdbcDao implements ProjectDao {
             PreparedStatement pstmt = connection.prepareStatement(sql1);
             pstmt.setString(1, task.getName());
             pstmt.setString(2, task.getDescription());
-            pstmt.setDate(3, (java.sql.Date) task.getBeginDate());
-            pstmt.setDate(4, (java.sql.Date) task.getEndDate());
-            pstmt.setString(5, StringUtils.join(task.getEmployeesWorkingOnIt(), "-"));
+            pstmt.setDate(3, new java.sql.Date(task.getBeginDate().getTime()));
+            pstmt.setDate(4, new java.sql.Date(task.getEndDate().getTime()));
+            pstmt.setString(5, task.getEmployeesWorkingOnItJoin());
             pstmt.setInt(6, task.getTaskAuthor().getId());
             pstmt.setInt(7, task.getProject().getId());
             pstmt.setInt(8, task.getId());

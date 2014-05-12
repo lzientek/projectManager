@@ -59,9 +59,11 @@ public class ModifTask extends JFrame {
 
                 if (!new JdbcProjectDao().updateProjectTask(task))
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en base de donnée.");
-                NotifServeur.getNotifServeur().emission("mt"); //on notifie le serveur
+                if (NotifServeur.isOnline)
+                    NotifServeur.getNotifServeur().emission("mt"); //on notifie le serveur
 
                 FenetreMere.updateValues();
+                FenetreMere.getAppFrame().reload();
 
                 dispose();
             }

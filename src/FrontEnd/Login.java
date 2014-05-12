@@ -68,6 +68,7 @@ public class Login extends JFrame {
                     while (NotifServeur.getNotifServeur() == null && i < 20) {
                         try {
                             Thread.sleep(30);
+                            i++;
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                             break;

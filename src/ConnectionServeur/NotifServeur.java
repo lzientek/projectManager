@@ -22,6 +22,7 @@ public class NotifServeur {
 
 
     private static NotifServeur notifServeur;
+    public static Boolean isOnline = false;
 
     public static NotifServeur getNotifServeur() {
         return notifServeur;
@@ -30,6 +31,7 @@ public class NotifServeur {
     public NotifServeur(Socket s) {
         socket = s;
         notifServeur = this;
+        isOnline = true;
         reception();
         try {
             out = new PrintWriter(socket.getOutputStream());

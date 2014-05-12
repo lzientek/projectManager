@@ -13,7 +13,6 @@ import java.util.List;
 public class Project {
     private int id;
     private String name;
-    private int projectAdvancement;
     private List<User> employeesWorkingOnIt;
     private List<ProjectTask> projectTasks;
 
@@ -29,11 +28,10 @@ public class Project {
         projectTasks = new ArrayList<ProjectTask>();
     }
 
-    public Project(String name, String[] employeesWorkingOnIt, int projectAdvancement,
+    public Project(String name, String[] employeesWorkingOnIt,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
 
-        this.projectAdvancement = projectAdvancement;
         this.id = id;
         this.author = author;
         this.beginDate = beginDate;
@@ -58,10 +56,6 @@ public class Project {
 
     public List<ProjectTask> getProjectTasks() {
         return projectTasks;
-    }
-
-    public void setProjectTasks(List<ProjectTask> projectTasks) {
-        this.projectTasks = projectTasks;
     }
 
     public List<User> getEmployeesWorkingOnIt() {
@@ -93,12 +87,17 @@ public class Project {
     }
 
     public int getProjectAdvancement() {
-        return projectAdvancement;
+        int count = 0;
+        if (projectTasks.size() == 0) //pour eviter la division par 0
+            return 0;
+        for (int i = 0; i < projectTasks.size(); i++) {
+            if (projectTasks.get(i).getEndDate().getTime() < new Date().getTime())
+                count++;
+        }
+
+        return (count * 100) / projectTasks.size();
     }
 
-    public void setProjectAdvancement(int projectAdvancement) {
-        this.projectAdvancement = projectAdvancement;
-    }
 
     public User getAuthor() {
         return author;
