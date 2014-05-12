@@ -1,6 +1,7 @@
 package FrontEnd.ActionListeners;
 
 import BackEnd.User;
+import FrontEnd.Controls.FormulaireAvecDesUsers;
 import FrontEnd.Controls.FormulaireProject;
 
 import java.awt.event.ActionEvent;
@@ -13,9 +14,9 @@ import java.util.List;
 public class DeleteUserlistener implements ActionListener {
     private User user;
     private List<User> userList;
-    private FormulaireProject form;
+    private FormulaireAvecDesUsers form;
 
-    public DeleteUserlistener(User user, List<User> userList, FormulaireProject form) {
+    public DeleteUserlistener(User user, List<User> userList, FormulaireAvecDesUsers form) {
         this.user = user;
         this.userList = userList;
         this.form = form;

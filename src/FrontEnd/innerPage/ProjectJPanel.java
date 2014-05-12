@@ -23,7 +23,7 @@ public class ProjectJPanel extends JPanel {
         appFrame = app;
         //JLabel lblProjects = new JLabel("Projects");
         //add(lblProjects, BorderLayout.NORTH);
-
+        appFrame.setOnProject(false);
         projectsPanel = new JPanel();
 
         projectsPanel.setLayout(new BoxLayout(projectsPanel, BoxLayout.Y_AXIS));

@@ -19,7 +19,7 @@ public class UserDeleteControl extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
         setLayout(new FlowLayout());
         add(new JLabel(user.getMail()));
-        btnSup = new JButton("supprimer");
+        btnSup = new JButton("X");
         btnSup.addActionListener(actionListenerDelete);
         add(btnSup);
     }

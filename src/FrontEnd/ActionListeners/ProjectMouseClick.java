@@ -21,6 +21,7 @@ public class ProjectMouseClick extends MouseAdapter {
     }
 
     public void mouseClicked(MouseEvent arg0) {
+        appFrame.setOnProject(true);
         appFrame.setSelectedProject(project);
         appFrame.setContent(new FullScreenProjectJPanel(appFrame));
     }

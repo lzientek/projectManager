@@ -4,6 +4,7 @@ import BackEnd.Project;
 import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
 import FrontEnd.PopUp.AjouterProject;
+import FrontEnd.PopUp.AjouterTask;
 import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
@@ -22,6 +23,13 @@ public class AppFrame extends JFrame {
     private List<Project> projects;
     private Project selectedProject;
     private JPanel contenu;
+    private JMenuItem mntmNouveauTask;
+
+    public void setOnProject(Boolean b) {
+        mntmNouveauTask.setEnabled(b);
+        mntmNouveauTask.revalidate();
+        revalidate();
+    }
 
     /**
      * Create the frame.
@@ -67,6 +75,16 @@ public class AppFrame extends JFrame {
             }
         });
         mnAjouter.add(mntmNouveauProjet);
+        mntmNouveauTask = new JMenuItem("nouvelle task");
+        mntmNouveauTask.setEnabled(true);
+        mntmNouveauTask.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AjouterTask ajouterProject = new AjouterTask(af);
+
+            }
+        });
+        mnAjouter.add(mntmNouveauTask);
     }
 
     public void setSelectedProject(Project selectedProject) {
@@ -92,6 +110,10 @@ public class AppFrame extends JFrame {
     }
 
     public Project getSelectedProject() {
+        return selectedProject;
+    }
+
+    public Project getProject() {
         return selectedProject;
     }
 }

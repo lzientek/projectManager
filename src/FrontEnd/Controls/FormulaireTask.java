@@ -1,6 +1,7 @@
 package FrontEnd.Controls;
 
 import BackEnd.Project;
+import BackEnd.ProjectTask;
 import DataBase.JdbcProjectDao;
 import FrontEnd.ActionListeners.DeleteUserlistener;
 import FrontEnd.PopUp.AjouterUser;
@@ -17,7 +18,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by lucas on 08/05/2014.
  */
-public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers {
+public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
     private final SimpleDateFormat dateFormatter;
     private JTextField textField_name;
     private JTextArea textArea;
@@ -28,10 +29,10 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
     private JTextField textField_DateFin_Mois;
     private JTextField textField_DateFin_Annee;
     private Panel panel_employee;
-    private Project project;
+    private ProjectTask task;
 
 
-    public FormulaireProject(Project project) {
+    public FormulaireTask(ProjectTask task) {
 
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -39,7 +40,7 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
         SimpleDateFormat moisformatter = new SimpleDateFormat("MM");
         SimpleDateFormat anneeformatter = new SimpleDateFormat("yyyy");
 
-        this.project = project;
+        this.task = task;
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 200, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -50,14 +51,14 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
         JLabel lblNom = new JLabel("Nom : ");
 
 
-        textField_name = new JTextField(project.getName());
-        textArea = new JTextArea(project.getDescription());
-        textField_DateDebut_Jour = new JTextField(dayformatter.format(project.getBeginDate()));
-        textField_DateDebut_Mois = new JTextField(moisformatter.format(project.getBeginDate()));
-        textField_DateDebut_Annee = new JTextField(anneeformatter.format(project.getBeginDate()));
-        textField_DateFin_Jour = new JTextField(dayformatter.format(project.getEndDate()));
-        textField_DateFin_Mois = new JTextField(moisformatter.format(project.getEndDate()));
-        textField_DateFin_Annee = new JTextField(anneeformatter.format(project.getEndDate()));
+        textField_name = new JTextField(task.getName());
+        textArea = new JTextArea(task.getDescription());
+        textField_DateDebut_Jour = new JTextField(dayformatter.format(task.getBeginDate()));
+        textField_DateDebut_Mois = new JTextField(moisformatter.format(task.getBeginDate()));
+        textField_DateDebut_Annee = new JTextField(anneeformatter.format(task.getBeginDate()));
+        textField_DateFin_Jour = new JTextField(dayformatter.format(task.getEndDate()));
+        textField_DateFin_Mois = new JTextField(moisformatter.format(task.getEndDate()));
+        textField_DateFin_Annee = new JTextField(anneeformatter.format(task.getEndDate()));
 
         panel_employee = new Panel();
         loadUsers();
@@ -171,17 +172,17 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
 
     public void loadUsers() {
 
-        final FormulaireProject fp = this;
+        final FormulaireTask ft = this;
 
 
         panel_employee.removeAll();
-        for (int i = 0; i < project.getEmployeesWorkingOnIt().size(); i++) {
+        for (int i = 0; i < task.getEmployeesWorkingOnIt().size(); i++) {
 
             UserDeleteControl userDeleteControl = new UserDeleteControl(
-                    project.getEmployeesWorkingOnIt().get(i),
+                    task.getEmployeesWorkingOnIt().get(i),
                     new DeleteUserlistener(
-                            project.getEmployeesWorkingOnIt().get(i),
-                            project.getEmployeesWorkingOnIt(), fp)
+                            task.getEmployeesWorkingOnIt().get(i),
+                            task.getEmployeesWorkingOnIt(), ft)
             );
             panel_employee.add(
                     userDeleteControl
@@ -194,40 +195,40 @@ public class FormulaireProject extends JPanel implements FormulaireAvecDesUsers 
         btnInvite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final AjouterUser ajouterUser = new AjouterUser(project.getEmployeesWorkingOnIt());
-                ajouterUser.setLocationRelativeTo(fp);
+                final AjouterUser ajouterUser = new AjouterUser(task.getEmployeesWorkingOnIt());
+                ajouterUser.setLocationRelativeTo(ft);
                 //on recupere le close de la fenetre pour metre a jour
                 ajouterUser.getBtnEnregistrer().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        project.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
-                        fp.loadUsers();
+                        task.getEmployeesWorkingOnIt().add(ajouterUser.getSelectedItem());
+                        ft.loadUsers();
                         ajouterUser.dispose();
                     }
                 });
             }
         });
         panel_employee.add(btnInvite);
-        if (this.isValid() && !new JdbcProjectDao().updateAProject(project))
+        if (this.isValid())
             JOptionPane.showMessageDialog(this, "Erreur d'enregistrement en base de donnée.");
 
     }
 
-    public Project getProject() {
-        project.setName(textField_name.getText());
-        project.setDescription(textArea.getText());
+    public ProjectTask getProject() {
+        task.setName(textField_name.getText());
+        task.setDescription(textArea.getText());
 
         try {
-            project.setBeginDate(dateFormatter.parse(textField_DateDebut_Jour.getText() + "/" +
+            task.setBeginDate(dateFormatter.parse(textField_DateDebut_Jour.getText() + "/" +
                     textField_DateDebut_Mois.getText() + "/" +
                     textField_DateDebut_Annee.getText()));
-            project.setEndDate(dateFormatter.parse(textField_DateFin_Jour.getText() + "/" +
+            task.setEndDate(dateFormatter.parse(textField_DateFin_Jour.getText() + "/" +
                     textField_DateFin_Mois.getText() + "/" +
                     textField_DateFin_Annee.getText()));
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "date non valide.(bien mettre sous la forme 01)");
 
         }
-        return project;
+        return task;
     }
 }
