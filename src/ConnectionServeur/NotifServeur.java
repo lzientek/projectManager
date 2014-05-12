@@ -1,6 +1,7 @@
 package ConnectionServeur;
 
 import BackEnd.StockageUser;
+import FrontEnd.AppFrame;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,10 +18,18 @@ public class NotifServeur {
     private Socket socket;
     private PrintWriter out = null;
     private BufferedReader in = null;
+    private AppFrame frame;
+
+
+    private static NotifServeur notifServeur;
+
+    public static NotifServeur getNotifServeur() {
+        return notifServeur;
+    }
 
     public NotifServeur(Socket s) {
         socket = s;
-        StockageUser.notifServeur = this;
+        notifServeur = this;
         reception();
         try {
             out = new PrintWriter(socket.getOutputStream());
@@ -36,8 +45,16 @@ public class NotifServeur {
     }
 
     public void reception() {
-        Thread t = new Thread(new ReceptionNotif(in));
+        Thread t = new Thread(new ReceptionNotif(in, frame));
         t.start();
+    }
+
+    public AppFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(AppFrame frame) {
+        this.frame = frame;
     }
 }
 

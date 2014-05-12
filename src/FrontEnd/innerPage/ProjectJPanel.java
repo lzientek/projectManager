@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by lucas on 08/05/2014.
  */
-public class ProjectJPanel extends JPanel {
+public class ProjectJPanel extends FullPage {
 
     private final JPanel projectsPanel;
     private AppFrame appFrame;
@@ -48,5 +48,11 @@ public class ProjectJPanel extends JPanel {
     public void addToProjectList(Project project) {
 
         projectsPanel.add(new ProjectControl(project, appFrame));
+    }
+
+    @Override
+    public void reloadInterface() {
+        setProjectList(appFrame.getProjects());
+        appFrame.getContentPane().revalidate();
     }
 }

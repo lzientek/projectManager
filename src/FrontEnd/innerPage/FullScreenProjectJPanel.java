@@ -11,11 +11,12 @@ import java.awt.event.ActionListener;
 /**
  * Created by lucas on 09/05/2014.
  */
-public class FullScreenProjectJPanel extends JPanel {
+public class FullScreenProjectJPanel extends FullPage {
 
 
     private final AppFrame appFrame;
     private final JPanel projectsPanel;
+    private JLabel lblProjects;
 
     public FullScreenProjectJPanel(AppFrame app) {
         setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -25,7 +26,7 @@ public class FullScreenProjectJPanel extends JPanel {
         projectsPanel = new JPanel();
         projectsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-        JLabel lblProjects = new JLabel(appFrame.getSelectedProject().getName());
+        lblProjects = new JLabel(appFrame.getSelectedProject().getName());
         projectsPanel.add(lblProjects);
 
         JButton buttonRetour = new JButton("Retour au projets");
@@ -41,5 +42,15 @@ public class FullScreenProjectJPanel extends JPanel {
         //important pour actualiser l'interface
         revalidate();
         appFrame.getContentPane().revalidate();
+    }
+
+    @Override
+    public void reloadInterface() {
+
+        lblProjects = new JLabel(appFrame.getSelectedProject().getName());
+
+        revalidate();
+        appFrame.getContentPane().revalidate();
+
     }
 }

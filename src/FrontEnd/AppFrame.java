@@ -5,6 +5,7 @@ import BackEnd.StockageUser;
 import DataBase.JdbcProjectDao;
 import FrontEnd.PopUp.AjouterProject;
 import FrontEnd.PopUp.AjouterTask;
+import FrontEnd.innerPage.FullPage;
 import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class AppFrame extends JFrame {
 
     private List<Project> projects;
     private Project selectedProject;
-    private JPanel contenu;
+    private FullPage contenu;
     private JMenuItem mntmNouveauTask;
 
     public void setOnProject(Boolean b) {
@@ -54,9 +55,10 @@ public class AppFrame extends JFrame {
         revalidate();
     }
 
-    private void reloadProjects() {
+    public void reloadProjects() {
         projects = new JdbcProjectDao().loadProjects(StockageUser.user);
     }
+
 
     private void menuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -71,7 +73,6 @@ public class AppFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AjouterProject ajouterProject = new AjouterProject(af);
-
             }
         });
         mnAjouter.add(mntmNouveauProjet);
@@ -81,7 +82,6 @@ public class AppFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AjouterTask ajouterProject = new AjouterTask(af);
-
             }
         });
         mnAjouter.add(mntmNouveauTask);
@@ -91,11 +91,12 @@ public class AppFrame extends JFrame {
         this.selectedProject = selectedProject;
     }
 
-    public void setContent(JPanel contentPane) {
+    public void setContent(FullPage contentPane) {
         contenu = contentPane;
         getContentPane().removeAll();
         getContentPane().add(contenu);
     }
+
 
     public JPanel getContenu() {
         return contenu;
@@ -115,6 +116,10 @@ public class AppFrame extends JFrame {
 
     public Project getProject() {
         return selectedProject;
+    }
+
+    public void reload() {
+        contenu.reloadInterface();
     }
 }
 

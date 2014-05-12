@@ -1,5 +1,6 @@
 package BackEnd;
 
+import DataBase.JdbcProjectDao;
 import DataBase.JdbcUserDao;
 
 import java.util.ArrayList;
@@ -31,11 +32,7 @@ public class Project {
     public Project(String name, String[] employeesWorkingOnIt, int projectAdvancement,
                    int id, User author, Date beginDate,
                    Date endDate, String description) {
-        try {
-            this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         this.projectAdvancement = projectAdvancement;
         this.id = id;
         this.author = author;
@@ -43,6 +40,12 @@ public class Project {
         this.endDate = endDate;
         this.description = description;
         this.name = name;
+        try {
+            this.employeesWorkingOnIt = new JdbcUserDao().loadUserByFromProject(employeesWorkingOnIt);
+            this.projectTasks = new JdbcProjectDao().loadTasksFromProject(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {

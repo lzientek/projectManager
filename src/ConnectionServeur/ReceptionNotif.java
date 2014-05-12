@@ -1,5 +1,7 @@
 package ConnectionServeur;
 
+import FrontEnd.AppFrame;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -13,11 +15,12 @@ import java.io.IOException;
  */
 public class ReceptionNotif implements Runnable {
 
+    private final AppFrame frame;
     private BufferedReader in;
     private String message = null;
 
-    public ReceptionNotif(BufferedReader in) {
-
+    public ReceptionNotif(BufferedReader in, AppFrame frame) {
+        this.frame = frame;
         this.in = in;
     }
 
@@ -27,7 +30,9 @@ public class ReceptionNotif implements Runnable {
             try {
 
                 message = in.readLine();
-                System.out.println("Le serveur vous dit :" + message);
+                if (message.equals("mp") || message.equals("np") || message.equals("nt") || message.equals("mt"))
+                    frame.reload();
+
 
             } catch (IOException e) {
 

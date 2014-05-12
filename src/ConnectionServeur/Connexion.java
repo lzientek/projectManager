@@ -23,8 +23,14 @@ public class Connexion implements Runnable {
     private BufferedReader in = null;
     private boolean connect = false;
 
-    public Connexion(Socket s) {
+    private static Connexion connexionServeur;
 
+    public static Connexion getConnexionServeur() {
+        return connexionServeur;
+    }
+
+    public Connexion(Socket s) {
+        connexionServeur = this;
         socket = s;
     }
 

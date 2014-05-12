@@ -3,6 +3,7 @@ package FrontEnd.PopUp;
 import BackEnd.Project;
 import BackEnd.ProjectTask;
 import BackEnd.StockageUser;
+import ConnectionServeur.NotifServeur;
 import DataBase.JdbcProjectDao;
 import FrontEnd.AppFrame;
 import FrontEnd.Controls.FormulaireProject;
@@ -31,7 +32,7 @@ public class AjouterTask extends JFrame {
         FenetreMere = fenetreMere;
         this.project = fenetreMere.getSelectedProject();
         setTitle("Nouvelle task");
-        setMinimumSize(new Dimension(550, 350));
+        setMinimumSize(new Dimension(550, 450));
         setBounds(100, 100, 550, 300);
         JPanel panel = new JPanel();
         setContentPane(panel);
@@ -57,7 +58,7 @@ public class AjouterTask extends JFrame {
                 ProjectTask t = formulaireTask.getProject();
                 if (new JdbcProjectDao().createProjectTask(t)) {
                     project.getProjectTasks().add(t);
-                    //TODO: bug a voir
+                    NotifServeur.getNotifServeur().emission("nt");
 
                     dispose();
                 } else

@@ -1,6 +1,7 @@
 package FrontEnd.PopUp;
 
 import BackEnd.Project;
+import ConnectionServeur.NotifServeur;
 import DataBase.JdbcProjectDao;
 import FrontEnd.Controls.FormulaireProject;
 import FrontEnd.Controls.ProjectControl;
@@ -26,7 +27,7 @@ public class ModifProject extends JFrame {
         this.project = project;
         this.FenetreMere = FenetreMere;
         setTitle("Modifier le projet " + project.getName());
-        setMinimumSize(new Dimension(550, 350));
+        setMinimumSize(new Dimension(550, 450));
         setBounds(100, 100, 550, 300);
         JPanel panel = new JPanel();
         setContentPane(panel);
@@ -61,6 +62,7 @@ public class ModifProject extends JFrame {
 
                 if (!new JdbcProjectDao().updateAProject(project))
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en base de donnée.");
+                NotifServeur.getNotifServeur().emission("mp"); //on notifie le serveur
 
                 FenetreMere.updateValues();
 

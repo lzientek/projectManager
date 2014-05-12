@@ -1,6 +1,9 @@
 package FrontEnd;
 
 import BackEnd.StockageUser;
+import ConnectionServeur.Connexion;
+import ConnectionServeur.LaunchServConnexion;
+import ConnectionServeur.NotifServeur;
 import DataBase.JdbcUserDao;
 import FrontEnd.Controls.TitleLabel;
 
@@ -59,7 +62,21 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 StockageUser.user = new JdbcUserDao().connectUser(textField_mail.getText(), textField_pass.getText());
                 if (StockageUser.user != null) {
+                    new LaunchServConnexion(); //on se connecte au serveur
                     AppFrame appFrame = new AppFrame();
+                    int i = 0;
+                    while (NotifServeur.getNotifServeur() == null && i < 20) {
+                        try {
+                            Thread.sleep(30);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                            break;
+                        }
+                    }
+                    if (NotifServeur.getNotifServeur() != null)
+                        NotifServeur.getNotifServeur().setFrame(appFrame);
+                    else
+                        JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur de connection au serveur.");
                     appFrame.setVisible(true);
 
                     dispose();

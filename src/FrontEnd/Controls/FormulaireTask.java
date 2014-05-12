@@ -28,7 +28,7 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
     private JTextField textField_DateFin_Jour;
     private JTextField textField_DateFin_Mois;
     private JTextField textField_DateFin_Annee;
-    private Panel panel_employee;
+    private JPanel panel_employee;
     private ProjectTask task;
 
 
@@ -60,7 +60,7 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
         textField_DateFin_Mois = new JTextField(moisformatter.format(task.getEndDate()));
         textField_DateFin_Annee = new JTextField(anneeformatter.format(task.getEndDate()));
 
-        panel_employee = new Panel();
+        panel_employee = new JPanel();
         loadUsers();
 
 
@@ -146,16 +146,20 @@ public class FormulaireTask extends JPanel implements FormulaireAvecDesUsers {
         gbc_lblEmploySurLe.gridx = 1;
         gbc_lblEmploySurLe.gridy = 5;
         add(lblEmploySurLe, gbc_lblEmploySurLe);
-        panel_employee.setSize(new Dimension(300, 1));
+        panel_employee.setSize(new Dimension(400, 1));
         WrapLayout mgr = new WrapLayout(WrapLayout.LEADING, 5, 5);
 
         panel_employee.setLayout(mgr);
+
+        JScrollPane scrollBar = new JScrollPane(panel_employee,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         GridBagConstraints gbc_panel_employee = new GridBagConstraints();
         gbc_panel_employee.insets = new Insets(0, 0, 0, 5);
         gbc_panel_employee.gridx = 2;
         gbc_panel_employee.gridy = 5;
-        add(panel_employee, gbc_panel_employee);
+        add(scrollBar, gbc_panel_employee);
 
 
         GridBagConstraints gbc_lblNom = new GridBagConstraints();

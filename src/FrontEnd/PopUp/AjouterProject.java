@@ -2,6 +2,7 @@ package FrontEnd.PopUp;
 
 import BackEnd.Project;
 import BackEnd.StockageUser;
+import ConnectionServeur.NotifServeur;
 import DataBase.JdbcProjectDao;
 import FrontEnd.AppFrame;
 import FrontEnd.Controls.FormulaireProject;
@@ -25,7 +26,7 @@ public class AjouterProject extends JFrame {
     public AjouterProject(AppFrame fenetreMere) {
         FenetreMere = fenetreMere;
         setTitle("Nouveau Projet");
-        setMinimumSize(new Dimension(550, 350));
+        setMinimumSize(new Dimension(550, 450));
         setBounds(100, 100, 550, 300);
         JPanel panel = new JPanel();
         setContentPane(panel);
@@ -52,6 +53,7 @@ public class AjouterProject extends JFrame {
                 Project p = formulaireProject.getProject();
                 if (new JdbcProjectDao().createAProject(p)) {
                     FenetreMere.getProjects().add(p);
+                    NotifServeur.getNotifServeur().emission("np"); //on notifie le serveur
                     ProjectJPanel contenu = (ProjectJPanel) FenetreMere.getContenu();
                     contenu.addToProjectList(p);
                     dispose();
