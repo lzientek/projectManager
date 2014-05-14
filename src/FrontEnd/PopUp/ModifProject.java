@@ -61,7 +61,8 @@ public class ModifProject extends JFrame {
 
                 if (!new JdbcProjectDao().updateAProject(project))
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Erreur d'enregistrement en base de donnée.");
-                NotifServeur.getNotifServeur().emission("mp"); //on notifie le serveur
+                if (NotifServeur.isOnline)
+                    NotifServeur.getNotifServeur().emission("mp"); //on notifie le serveur
 
                 FenetreMere.updateValues();
 

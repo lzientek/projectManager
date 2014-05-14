@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="projectManager:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/projectManager_jar</output-path>
+    <root id="archive" name="projectManager.jar">
+      <element id="module-output" name="projectManager" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/synthetica.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/Program Files (x86)/MySQL/Connector J 5.1.30/mysql-connector-java-5.1.30-bin.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/syntheticaAluOxide.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

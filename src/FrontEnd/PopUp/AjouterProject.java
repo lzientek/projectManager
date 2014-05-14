@@ -53,7 +53,8 @@ public class AjouterProject extends JFrame {
                 Project p = formulaireProject.getProject();
                 if (new JdbcProjectDao().createAProject(p)) {
                     FenetreMere.getProjects().add(p);
-                    NotifServeur.getNotifServeur().emission("np"); //on notifie le serveur
+                    if (NotifServeur.isOnline)
+                        NotifServeur.getNotifServeur().emission("np"); //on notifie le serveur
                     ProjectJPanel contenu = (ProjectJPanel) FenetreMere.getContenu();
                     contenu.addToProjectList(p);
                     dispose();

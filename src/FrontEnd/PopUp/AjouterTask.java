@@ -6,11 +6,9 @@ import BackEnd.StockageUser;
 import ConnectionServeur.NotifServeur;
 import DataBase.JdbcProjectDao;
 import FrontEnd.AppFrame;
-import FrontEnd.Controls.FormulaireProject;
 import FrontEnd.Controls.FormulaireTask;
 import FrontEnd.Controls.TitleLabel;
 import FrontEnd.innerPage.FullScreenProjectJPanel;
-import FrontEnd.innerPage.ProjectJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -57,7 +55,8 @@ public class AjouterTask extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ProjectTask t = formulaireTask.getProject();
                 if (new JdbcProjectDao().createProjectTask(t)) {
-                    NotifServeur.getNotifServeur().emission("nt");
+                    if (NotifServeur.isOnline)
+                        NotifServeur.getNotifServeur().emission("nt");
                     FullScreenProjectJPanel contenu = (FullScreenProjectJPanel) FenetreMere.getContenu();
                     contenu.addToTaskList(t);
                     dispose();
